@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -22,19 +24,18 @@ Route::get('logout', [AuthController::class, 'logout']);
 
 Route::group(['middleware' => 'admin'], function () {
     // Admin Dashboard routes
-    Route::get('admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('admin/users/admin', [AdminController::class, 'create'])->name('admin.create');
     Route::post('admin/users/admin', [AdminController::class, 'store'])->name('admin.store');
     Route::delete('admin/users/admin/{id}', [AdminController::class, 'delete'])->name('admin.delete');
-    //Route::get('admin/majors', [MajorController::class, 'create'])->name('major.create');
-    //Route::post('admin/majors', [AdminController::class, 'store'])->name('major.store');
-    //Route::delete('admin/majors/{id}', [AdminController::class, 'delete'])->name('major.delete');
+    Route::get('admin/majors', [MajorController::class, 'create'])->name('major.create');
+    Route::post('admin/majors', [MajorController::class, 'store'])->name('major.store');
+    Route::delete('admin/majors/{id}', [MajorController::class, 'delete'])->name('major.delete');
+    Route::get('admin/classrooms', [ClassroomController::class, 'create'])->name('classroom.create');
+    Route::post('admin/classrooms', [ClassroomController::class, 'store'])->name('classroom.store');
+    Route::delete('admin/classrooms/{id}', [ClassroomController::class, 'delete'])->name('classroom.delete');
 
-    Route::get('admin/classrooms', function () {
-        return view('admin.classrooms.classrooms');
-    });
+
 
     // Teacher Dashboard routes
     Route::get('admin/users/teacher', function () {
@@ -58,6 +59,9 @@ Route::group(['middleware' => 'admin'], function () {
 Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/dashboard', function () {
         return view('teacher.dashboard');
+    });
+    Route::get('teacher/calendar', function () {
+        return view('teacher.calendar');
     });
 });
 

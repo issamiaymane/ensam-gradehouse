@@ -288,7 +288,7 @@
                     >
                       <span>INDIA Student</span>
                       <span class="h-1 w-1 rounded-full bg-gray-400"></span>
-                      <span>5 min ago</span>
+                      <span>Just Now</span>
                     </span>
                   </span>
                                 </a>

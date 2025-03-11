@@ -14,6 +14,8 @@ class CreateClassroomsTable extends Migration
             $table->enum('level_year', ['first', 'second', 'third']);
             $table->string('school_year');
             $table->timestamps();
+
+            $table->unique(['major_id', 'level_year', 'school_year']);
         });
     }
 
