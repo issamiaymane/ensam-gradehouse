@@ -12,15 +12,15 @@ class AuthController extends Controller
         // dd(Hash::make(123456));
         if (!empty(Auth::check()))
         {
-            if(Auth::user()->role == 1)
+            if(Auth::user()->role == "admin")
             {
                 return redirect('admin/dashboard');
             }
-            else if(Auth::user()->role == 2)
+            else if(Auth::user()->role == "teacher")
             {
                 return redirect('teacher/dashboard');
             }
-            else if(Auth::user()->role == 3)
+            else if(Auth::user()->role == "student")
             {
                 return redirect('student/dashboard');
             }
@@ -35,15 +35,15 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember))
         {
-            if(Auth::user()->role == 1)
+            if(Auth::user()->role == "admin")
             {
                 return redirect('admin/dashboard');
             }
-            else if(Auth::user()->role == 2)
+            else if(Auth::user()->role == "teacher")
             {
                 return redirect('teacher/dashboard');
             }
-            else if(Auth::user()->role == 3)
+            else if(Auth::user()->role == "student")
             {
                 return redirect('student/dashboard');
             }

@@ -203,17 +203,11 @@
                             </div>
                         </form>
                         <div class="mt-5">
-                            <p
-                                class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start"
-                            >
-                                Don't have an account?
-                                <a
-                                    href="{{url('sign-up')}}"
-                                    class="text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                                >Sign Up</a
-                                >
+                            <p class="text-sm text-black-500 dark:text-gray-400">
+                                Note: For students logging in for the first time, use your Apogee code as your password.
                             </p>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -234,11 +228,11 @@
                 </div>
 
                 <div class="flex flex-col items-center max-w-xs">
-                    <a href="index.html" class="block mb-4">
-                        <img src="images/logo/auth-logo.svg" alt="Logo" />
+                    <a href="{{url('/')}}" class="block mb-4">
+                        <img src="images/logo/auth-logo.png" alt="Logo" />
                     </a>
                     <p class="text-center text-gray-400 dark:text-white/60">
-                        Free and Open-Source Tailwind CSS Admin Dashboard Template
+                        Empowering education through efficient grade management, where every student's success is our priority.
                     </p>
                 </div>
             </div>

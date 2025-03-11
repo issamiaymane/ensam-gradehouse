@@ -23,7 +23,7 @@ class AdminMiddleware
 
             // Check if user has the role
             $user = Auth::user();
-            if ($user->role !== 1) {
+            if ($user->role !== "admin") {
                 Auth::logout();
                 return redirect('sign-in')->with('error', 'Access denied.');
             }

@@ -23,7 +23,7 @@ class StudentMiddleware
 
         // Check if user has the role
         $user = Auth::user();
-        if ($user->role !== 3) {
+        if ($user->role !== "student") {
             Auth::logout();
             return redirect('sign-in')->with('error', 'Access denied.');
         }

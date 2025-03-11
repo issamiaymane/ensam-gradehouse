@@ -33,7 +33,7 @@
                                 <!-- Full Name -->
                                 <div>
                                     <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Full Name</p>
-                                    <p class="text-lg font-semibold text-gray-800 dark:text-white/90">{{Auth::user()->name}}</p>
+                                    <p class="text-lg font-semibold text-gray-800 dark:text-white/90">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</p>
                                 </div>
 
                                 <!-- Apogee Code -->
