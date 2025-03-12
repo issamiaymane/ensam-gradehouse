@@ -12,6 +12,7 @@ class CreateClassroomsTable extends Migration
             $table->id();
             $table->foreignId('major_id')->constrained('majors');
             $table->enum('level_year', ['first', 'second', 'third']);
+            $table->string('name')->nullable();
             $table->string('school_year');
             $table->timestamps();
 

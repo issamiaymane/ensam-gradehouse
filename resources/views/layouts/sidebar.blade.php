@@ -388,18 +388,18 @@
                                 >
                                     <li>
                                         <a
-                                            href="#"
+                                            href="{{url('admin/subjects')}}"
                                             class="menu-dropdown-item group"
-                                            :class="page === 'addRemoveSubjects' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                            :class="(page === 'manageSubjects' || '{{ Request::segment(2) }}' === 'subjects') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
                                         >
-                                            Add/Remove Subjects
+                                            Manage Subjects
                                         </a>
                                     </li>
                                     <li>
                                         <a
-                                            href="#"
+                                            href="{{url('admin/subject/assign')}}"
                                             class="menu-dropdown-item group"
-                                            :class="page === 'assignTeachers' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                            :class="(page === 'assignTeachers' || '{{ Request::segment(3) }}' === 'assign') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
                                         >
                                             Assign Teachers to Subjects
                                         </a>

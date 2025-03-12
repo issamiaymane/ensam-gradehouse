@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
 use App\Models\Classroom;
-use App\Models\Major; // Import the Major model
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
-    // Show the form for creating a new classroom
     public function create()
     {
         // Retrieve all classrooms and eager load the major relationship
@@ -21,15 +20,13 @@ class ClassroomController extends Controller
         return view('admin.classrooms.classrooms', compact('classrooms', 'majors'));
     }
 
-
-    // Store a newly created classroom in the database
     public function store(Request $request)
     {
         // Validate the incoming request data
         $request->validate([
-            'major_id' => 'required|exists:majors,id',  // Make sure the major_id exists in the majors table
-            'level_year' => 'required|in:first,second,third',  // Validate the level_year
-            'school_year' => 'required|string|max:255',  // Validate the school year
+            'major_id' => 'required|exists:majors,id',
+            'level_year' => 'required|in:first,second,third',
+            'school_year' => 'required|string|max:255',
         ]);
 
         try {
@@ -48,7 +45,6 @@ class ClassroomController extends Controller
         }
     }
 
-    // Delete a specific classroom
     public function delete($id)
     {
         $classroom = Classroom::findOrFail($id);

@@ -32,7 +32,7 @@
 
     </div>
     <!-- ===== Preloader End ===== -->
-    <nav class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 shadow-sm">
+    <nav class="fixed w-full bg-white dark:bg-gray-900/90 backdrop-blur-md z-50 shadow-sm">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="#" class="flex items-center">
@@ -57,10 +57,10 @@
             <h1
                 class="mb-8 text-title-md font-bold text-gray-800 dark:text-white/90 xl:text-title-2xl"
             >
-                Welcome Abroad !
+                ENSAM GradeHouse
             </h1>
 
-            <p class="mb-6 mt-10 text-base text-gray-700 dark:text-gray-400 sm:text-lg">
+            <p class="mb-6 Welcome On Board!mt-10 text-base text-gray-700 dark:text-gray-400 sm:text-lg">
                 Welcome to our platform! We're excited to have you on board. Explore the various features, connect with others, and enjoy the experience.
             </p>
 

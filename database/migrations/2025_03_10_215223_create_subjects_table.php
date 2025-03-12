@@ -10,11 +10,12 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            // Change 'classes' to 'classrooms'
             $table->foreignId('classroom_id')->constrained('classrooms');
             $table->string('code');
             $table->string('name');
             $table->timestamps();
+
+            $table->unique(['classroom_id', 'code']);
         });
     }
 

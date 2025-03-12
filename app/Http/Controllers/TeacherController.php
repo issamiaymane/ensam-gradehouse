@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
@@ -71,6 +72,21 @@ class TeacherController extends Controller
 
         // Redirect back with a success message
         return redirect()->route('teacher.create')->with('success', 'Admin deleted successfully!');
+    }
+
+    public function dashboard()
+    {
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Get the teacher associated with the authenticated user
+        $teacher = $user->teacher;
+
+        // Fetch the assigned subjects for the teacher
+        $assignedSubjects = $teacher->assignments()->with('subject.classroom')->get();
+
+        // Pass the data to the view
+        return view('teacher.dashboard', compact('user', 'assignedSubjects'));
     }
 
 }

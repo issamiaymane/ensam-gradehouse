@@ -15,4 +15,14 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'teacher_subject');
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
 }

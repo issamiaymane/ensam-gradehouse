@@ -5,6 +5,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -34,8 +35,14 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/classrooms', [ClassroomController::class, 'create'])->name('classroom.create');
     Route::post('admin/classrooms', [ClassroomController::class, 'store'])->name('classroom.store');
     Route::delete('admin/classrooms/{id}', [ClassroomController::class, 'delete'])->name('classroom.delete');
+    Route::get('admin/subjects', [SubjectController::class, 'create'])->name('subject.create');
+    Route::post('admin/subjects', [SubjectController::class, 'store'])->name('subject.store');
+    Route::delete('admin/subjects/{id}', [SubjectController::class, 'delete'])->name('subject.delete');
 
-
+    // Assign Teachers to Subjects
+    Route::get('admin/subject/assign', [SubjectController::class, 'assign'])->name('subject.assign');
+    Route::post('admin/subject/assign', [SubjectController::class, 'assignStore'])->name('subject.assign.store');
+    Route::delete('admin/subject/assign/{assignmentId}', [SubjectController::class, 'assignDelete'])->name('subject.assign.delete');
 
     // Teacher Dashboard routes
     Route::get('admin/users/teacher', function () {
@@ -57,9 +64,7 @@ Route::group(['middleware' => 'admin'], function () {
 });
 
 Route::group(['middleware' => 'teacher'], function () {
-    Route::get('teacher/dashboard', function () {
-        return view('teacher.dashboard');
-    });
+    Route::get('teacher/dashboard', [TeacherController::class, 'dashboard']);
     Route::get('teacher/calendar', function () {
         return view('teacher.calendar');
     });
