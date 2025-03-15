@@ -81,10 +81,13 @@ Route::group(['middleware' => 'admin'], function () {
 Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/dashboard', [TeacherController::class, 'dashboard']);
     Route::get('/subject/{classroomSubjectId}/students', [TeacherController::class, 'subjectStudents'])->name('teacher.subject.students');
+    Route::post('/grades/save', [TeacherController::class, 'saveGrades'])->name('grades.save');
 
     Route::get('teacher/calendar', function () {
         return view('teacher.calendar');
     });
+
+
 });
 
 Route::group(['middleware' => 'student'], function () {

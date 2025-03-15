@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
             $table->foreignId('teacher_subject_assignment_id')->constrained('teacher_subject_assignment')->onDelete('cascade');
-            $table->decimal('grade', 5, 2); // e.g., 85.50
+            $table->decimal('grade', 5, 2)->nullable();
             $table->enum('status', ['draft', 'submitted', 'approved'])->default('draft');
             $table->timestamps();
             $table->softDeletes();

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ClassroomStudent;
 use App\Models\ClassroomSubject;
+use App\Models\Grade;
 use App\Models\TeacherSubjectAssignment;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
@@ -60,5 +62,31 @@ class TeacherController extends Controller
 
         // Pass the data to the view
         return view('teacher.subject_students', compact('classroomSubject', 'students'));
+    }
+
+    public function saveGrades(Request $request)
+    {
+        $classroomSubjectId = $request->input('classroom_subject_id');
+        $students = $request->input('students');
+        $action = $request->input('action'); // 'save' or 'submit'
+
+        foreach ($students as $studentData) {
+            $studentId = $studentData['student_id'];
+            $grade = $studentData['grade'];
+
+            // Find or create the grade record
+            Grade::updateOrCreate(
+                [
+                    'student_id' => $studentId,
+                    'teacher_subject_assignment_id' => $classroomSubjectId,
+                ],
+                [
+                    'grade' => $grade,
+                    'status' => ($action === 'submit') ? 'submitted' : 'draft', // Set status based on action
+                ]
+            );
+        }
+
+        return redirect()->back()->with('success', 'Grades ' . ($action === 'submit' ? 'submitted' : 'saved') . ' successfully!');
     }
 }

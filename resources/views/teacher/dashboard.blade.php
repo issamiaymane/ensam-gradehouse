@@ -40,25 +40,7 @@
                             <div class="max-w-full overflow-x-auto">
                                 <table class="min-w-full">
                                     <!-- Table Header -->
-                                    <thead>
-                                    <tr class="border-b border-gray-100 dark:border-gray-800">
-                                        <th class="px-5 py-3 sm:px-6">
-                                            <div class="flex items-center">
-                                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                    Subject
-                                                </p>
-                                            </div>
-                                        </th>
-                                        <th class="px-5 py-3 sm:px-6">
-                                            <div class="flex items-center">
-                                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                                                    Code
-                                                </p>
-                                            </div>
-                                        </th>
 
-                                    </tr>
-                                    </thead>
                                     <!-- Table Body -->
                                     <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
                                     @if($assignedSubjects->isEmpty())
@@ -83,15 +65,15 @@
                                                     <td class="px-5 py-4 sm:px-6">
                                                         <div class="flex items-center">
                                                             <a href="{{ route('teacher.subject.students', $assignment->classroomSubject->id) }}" class="text-gray-800 text-theme-sm dark:text-white/90 hover:text-brand-500">
-                                                                {{ $assignment->classroomSubject->subject->name }}
+                                                                {{ $assignment->classroomSubject->subject_code }}
                                                             </a>
                                                         </div>
                                                     </td>
                                                     <td class="px-5 py-4 sm:px-6">
                                                         <div class="flex items-center">
-                                                            <p class="text-gray-800 text-theme-sm dark:text-white/90">
-                                                                {{ $assignment->classroomSubject->subject_code }}
-                                                            </p>
+                                                            <a href="{{ route('teacher.subject.students', $assignment->classroomSubject->id) }}" class="text-gray-800 text-theme-sm dark:text-white/90 hover:text-brand-500">
+                                                                {{ $assignment->classroomSubject->subject->name }}
+                                                            </a>
                                                         </div>
                                                     </td>
                                                 </tr>

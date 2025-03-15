@@ -69,25 +69,57 @@
                         <!-- Subject Code Input -->
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Subject Code</label>
-                            <input
-                                type="text"
+                            <select
                                 name="subject_code"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-                                placeholder="e.g., M1.1"
                                 required
-                            />
+                            >
+                                <option value="" disabled selected>Select Subject Code</option>
+                                <!-- Generate options dynamically -->
+                                <option value="M1">M1</option>
+                                <option value="M1.1">M1.1</option>
+                                <option value="M1.2">M1.2</option>
+                                <option value="M1.3">M1.3</option>
+                                <option value="M2">M2</option>
+                                <option value="M2.1">M2.1</option>
+                                <option value="M2.2">M2.2</option>
+                                <option value="M2.3">M2.3</option>
+                                <option value="M3">M3</option>
+                                <option value="M3.1">M3.1</option>
+                                <option value="M3.2">M3.2</option>
+                                <option value="M3.3">M3.3</option>
+                                <option value="M4">M4</option>
+                                <option value="M4.1">M4.1</option>
+                                <option value="M4.2">M4.2</option>
+                                <option value="M4.3">M4.3</option>
+                                <option value="M5">M5</option>
+                                <option value="M5.1">M5.1</option>
+                                <option value="M5.2">M5.2</option>
+                                <option value="M5.3">M5.3</option>
+                                <option value="M6">M6</option>
+                                <option value="M6.1">M6.1</option>
+                                <option value="M6.2">M6.2</option>
+                                <option value="M6.3">M6.3</option>
+                                <!-- Add more as needed -->
+                            </select>
                         </div>
 
                         <!-- Semester Input -->
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Semester</label>
-                            <input
-                                type="text"
+                            <select
                                 name="semester"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-                                placeholder="e.g., S1"
                                 required
-                            />
+                            >
+                                <option value="" disabled selected>Select Semester</option>
+                                <option value="S1">S1</option>
+                                <option value="S2">S2</option>
+                                <option value="S3">S3</option>
+                                <option value="S4">S4</option>
+                                <option value="S5">S5</option>
+                                <option value="S6">S6</option>
+                            </select>
                         </div>
 
                         <!-- Submit Button -->
