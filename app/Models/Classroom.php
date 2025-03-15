@@ -10,9 +10,8 @@ class Classroom extends Model
     use HasFactory;
     protected $fillable = [
         'major_id',
-        'level_year',
-        'school_year',
-        'name',  // make sure it's mass assignable
+        'level',
+        'name',
     ];
 
     public function major()
@@ -20,13 +19,12 @@ class Classroom extends Model
         return $this->belongsTo(Major::class);
     }
 
-    // Define the accessor for `name`
     public function getNameAttribute()
     {
         $major_name = $this->major->code;
         $level = '';
 
-        switch ($this->level_year) {
+        switch ($this->level) {
             case 'first':
                 $level = '1';
                 break;

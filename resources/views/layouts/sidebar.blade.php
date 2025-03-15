@@ -90,8 +90,8 @@
                                     class="menu-item-text"
                                     :class="sidebarToggle ? 'lg:hidden' : ''"
                                 >
-                Dashboard
-            </span>
+            Dashboard
+        </span>
                             </a>
                         </li>
 
@@ -121,8 +121,8 @@
                                 </svg>
 
                                 <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                    Users
-                </span>
+            Users
+        </span>
 
                                 <svg
                                     class="menu-item-arrow"
@@ -181,20 +181,18 @@
                                     </li>
                                 </ul>
                             </div>
-
                             <!-- Dropdown Menu End -->
                         </li>
 
-                        <!-- Menu Item Majors-->
+                        <!-- Menu Item Majors -->
                         <li>
                             <a
-                                href="#"
-                                @click.prevent="selected = (selected === 'Majors' ? '':'Majors')"
+                                href="{{ url('admin/majors') }}"
                                 class="menu-item group"
-                                :class="selected === 'Majors' ? 'menu-item-active' : 'menu-item-inactive'"
+                                :class="(selected === 'Majors' || '{{ Request::segment(2) }}' === 'majors') ? 'menu-item-active' : 'menu-item-inactive'"
                             >
                                 <svg
-                                    :class="selected === 'Majors' ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                                    :class="(selected === 'Majors' || '{{ Request::segment(2) }}' === 'majors') ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
                                     width="24"
                                     height="24"
                                     viewBox="0 0 24 24"
@@ -211,62 +209,50 @@
                                 </svg>
 
                                 <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                    Majors
-                </span>
+            Majors
+        </span>
+                            </a>
+                        </li>
 
+                        <!-- Menu Item Subjects -->
+                        <li>
+                            <a
+                                href="{{ url('admin/subjects') }}"
+                                class="menu-item group"
+                                :class="(selected === 'Subjects' || '{{ Request::segment(2) }}' === 'subjects') ? 'menu-item-active' : 'menu-item-inactive'"
+                            >
                                 <svg
-                                    class="menu-item-arrow"
-                                    :class="[(selected === 'Majors') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 20 20"
+                                    :class="(selected === 'Subjects' || '{{ Request::segment(2) }}' === 'subjects') ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
+                                    <!-- SVG Path for Subjects Icon -->
                                     <path
-                                        d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585"
-                                        stroke=""
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M5.5 3.25C4.25736 3.25 3.25 4.25736 3.25 5.5V18.5C3.25 19.7426 4.25736 20.75 5.5 20.75H18.5001C19.7427 20.75 20.7501 19.7426 20.7501 18.5V5.5C20.7501 4.25736 19.7427 3.25 18.5001 3.25H5.5ZM4.75 5.5C4.75 5.08579 5.08579 4.75 5.5 4.75H18.5001C18.9143 4.75 19.2501 5.08579 19.2501 5.5V18.5C19.2501 18.9142 18.9143 19.25 18.5001 19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5V5.5ZM6.25005 9.7143C6.25005 9.30008 6.58583 8.9643 7.00005 8.9643L17 8.96429C17.4143 8.96429 17.75 9.30008 17.75 9.71429C17.75 10.1285 17.4143 10.4643 17 10.4643L7.00005 10.4643C6.58583 10.4643 6.25005 10.1285 6.25005 9.7143ZM6.25005 14.2857C6.25005 13.8715 6.58583 13.5357 7.00005 13.5357H17C17.4143 13.5357 17.75 13.8715 17.75 14.2857C17.75 14.6999 17.4143 15.0357 17 15.0357H7.00005C6.58583 15.0357 6.25005 14.6999 6.25005 14.2857Z"
+                                        fill=""
                                     />
                                 </svg>
+
+                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+            Subjects
+        </span>
                             </a>
-
-                            <!-- Dropdown Menu Start -->
-                            <div
-                                class="overflow-hidden transform translate"
-                                :class="selected === 'Majors' ? 'block' : 'hidden'"
-                            >
-                                <ul
-                                    :class="sidebarToggle ? 'lg:hidden' : 'flex'"
-                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9"
-                                >
-                                    <li>
-                                        <a
-                                            href="{{ url('admin/majors') }}"
-                                            class="menu-dropdown-item group"
-                                            :class="(page === 'manageMajors' || '{{ Request::segment(2) }}' === 'majors') ? 'menu-item-active' : 'menu-item-inactive'"
-                                        >
-                                            Manage Majors
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <!-- Dropdown Menu End -->
                         </li>
 
-                        <!-- Menu Item Classrooms-->
+                        <!-- Menu Item Classrooms -->
                         <li>
                             <a
-                                href="#"
-                                @click.prevent="selected = (selected === 'Classrooms' ? '':'Classrooms')"
+                                href="{{ url('admin/classrooms') }}"
                                 class="menu-item group"
-                                :class="selected === 'Classrooms' ? 'menu-item-active' : 'menu-item-inactive'"
+                                :class="(selected === 'Classrooms' || '{{ Request::segment(2) }}' === 'classrooms') ? 'menu-item-active' : 'menu-item-inactive'"
                             >
                                 <svg
-                                    :class="selected === 'Classrooms' ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                                    :class="(selected === 'Classrooms' || '{{ Request::segment(2) }}' === 'classrooms') ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
                                     width="24"
                                     height="24"
                                     viewBox="0 0 24 24"
@@ -283,84 +269,43 @@
                                 </svg>
 
                                 <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                    Classrooms
-                </span>
-
-                                <svg
-                                    class="menu-item-arrow"
-                                    :class="[(selected === 'Classrooms') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 20 20"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585"
-                                        stroke=""
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
+            Classrooms
+        </span>
                             </a>
-
-                            <!-- Dropdown Menu Start -->
-                            <div
-                                class="overflow-hidden transform translate"
-                                :class="selected === 'Classrooms' ? 'block' : 'hidden'"
-                            >
-                                <ul
-                                    :class="sidebarToggle ? 'lg:hidden' : 'flex'"
-                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9"
-                                >
-                                    <li>
-                                        <a
-                                            href="{{ url('admin/classrooms') }}"
-                                            class="menu-dropdown-item group"
-                                            :class="(page === 'manageClassrooms' || '{{ Request::segment(2) }}' === 'classrooms') ? 'menu-item-active' : 'menu-item-inactive'"
-                                        >
-                                            Manage Classrooms
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <!-- Dropdown Menu End -->
                         </li>
 
-                        <!-- Menu Item Subjects -->
+
+                        <!-- Menu Item Assignments -->
                         <li>
                             <a
                                 href="#"
-                                @click.prevent="selected = (selected === 'Subjects' ? '':'Subjects')"
+                                @click.prevent="selected = (selected === 'Assignments' ? '':'Assignments')"
                                 class="menu-item group"
-                                :class="selected === 'Subjects' ? 'menu-item-active' : 'menu-item-inactive'"
+                                :class="selected === 'Assignments' ? 'menu-item-active' : 'menu-item-inactive'"
                             >
                                 <svg
-                                    :class="selected === 'Subjects' ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                                    :class="(selected === 'Assignments') ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
                                     width="24"
                                     height="24"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <!-- SVG Path for Subjects Icon (same as classes for now) -->
                                     <path
                                         fill-rule="evenodd"
                                         clip-rule="evenodd"
-                                        d="M5.5 3.25C4.25736 3.25 3.25 4.25736 3.25 5.5V18.5C3.25 19.7426 4.25736 20.75 5.5 20.75H18.5001C19.7427 20.75 20.7501 19.7426 20.7501 18.5V5.5C20.7501 4.25736 19.7427 3.25 18.5001 3.25H5.5ZM4.75 5.5C4.75 5.08579 5.08579 4.75 5.5 4.75H18.5001C18.9143 4.75 19.2501 5.08579 19.2501 5.5V18.5C19.2501 18.9142 18.9143 19.25 18.5001 19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5V5.5ZM6.25005 9.7143C6.25005 9.30008 6.58583 8.9643 7.00005 8.9643L17 8.96429C17.4143 8.96429 17.75 9.30008 17.75 9.71429C17.75 10.1285 17.4143 10.4643 17 10.4643L7.00005 10.4643C6.58583 10.4643 6.25005 10.1285 6.25005 9.7143ZM6.25005 14.2857C6.25005 13.8715 6.58583 13.5357 7.00005 13.5357H17C17.4143 13.5357 17.75 13.8715 17.75 14.2857C17.75 14.6999 17.4143 15.0357 17 15.0357H7.00005C6.58583 15.0357 6.25005 14.6999 6.25005 14.2857Z"
+                                        d="M14 2.75C14 2.33579 14.3358 2 14.75 2C15.1642 2 15.5 2.33579 15.5 2.75V5.73291L17.75 5.73291H19C19.4142 5.73291 19.75 6.0687 19.75 6.48291C19.75 6.89712 19.4142 7.23291 19 7.23291H18.5L18.5 12.2329C18.5 15.5691 15.9866 18.3183 12.75 18.6901V21.25C12.75 21.6642 12.4142 22 12 22C11.5858 22 11.25 21.6642 11.25 21.25V18.6901C8.01342 18.3183 5.5 15.5691 5.5 12.2329L5.5 7.23291H5C4.58579 7.23291 4.25 6.89712 4.25 6.48291C4.25 6.0687 4.58579 5.73291 5 5.73291L6.25 5.73291L8.5 5.73291L8.5 2.75C8.5 2.33579 8.83579 2 9.25 2C9.66421 2 10 2.33579 10 2.75L10 5.73291L14 5.73291V2.75ZM7 7.23291L7 12.2329C7 14.9943 9.23858 17.2329 12 17.2329C14.7614 17.2329 17 14.9943 17 12.2329L17 7.23291L7 7.23291Z"
                                         fill=""
                                     />
                                 </svg>
 
                                 <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                Subjects
-            </span>
+            Assignments
+        </span>
 
                                 <svg
                                     class="menu-item-arrow"
-                                    :class="[(selected === 'Subjects') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
+                                    :class="[(selected === 'Assignments') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
                                     width="20"
                                     height="20"
                                     viewBox="0 0 20 20"
@@ -380,7 +325,7 @@
                             <!-- Dropdown Menu Start -->
                             <div
                                 class="overflow-hidden transform translate"
-                                :class="selected === 'Subjects' ? 'block' :'hidden'"
+                                :class="selected === 'Assignments' ? 'block' : 'hidden'"
                             >
                                 <ul
                                     :class="sidebarToggle ? 'lg:hidden' : 'flex'"
@@ -388,20 +333,20 @@
                                 >
                                     <li>
                                         <a
-                                            href="{{url('admin/subjects')}}"
+                                            href="{{ url('admin/assignments/teacher') }}"
                                             class="menu-dropdown-item group"
-                                            :class="(page === 'manageSubjects' || '{{ Request::segment(2) }}' === 'subjects') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                            :class="(page === 'Assignments' || '{{ Request::segment(3) }}' === 'teacher') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
                                         >
-                                            Manage Subjects
+                                            Assign Teachers
                                         </a>
                                     </li>
                                     <li>
                                         <a
-                                            href="{{url('admin/subject/assign')}}"
+                                            href="{{ url('admin/assignments/student') }}"
                                             class="menu-dropdown-item group"
-                                            :class="(page === 'assignTeachers' || '{{ Request::segment(3) }}' === 'assign') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                            :class="(page === 'Assignments' || '{{ Request::segment(3) }}' === 'student') ? 'menu-item-active' : 'menu-item-inactive'"
                                         >
-                                            Assign Teachers to Subjects
+                                            Assign Students
                                         </a>
                                     </li>
                                 </ul>
@@ -418,18 +363,17 @@
                                 :class="selected === 'Grades' ? 'menu-item-active' : 'menu-item-inactive'"
                             >
                                 <svg
-                                    :class="selected === 'Grades' ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                                    :class="(selected === 'Tables') || (page === 'basicTables' || page === 'dataTables') ? 'menu-item-icon-active'  :'menu-item-icon-inactive'"
                                     width="24"
                                     height="24"
                                     viewBox="0 0 24 24"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <!-- SVG Path for Grades Icon (same as classes for now) -->
                                     <path
                                         fill-rule="evenodd"
                                         clip-rule="evenodd"
-                                        d="M5.5 3.25C4.25736 3.25 3.25 4.25736 3.25 5.5V18.5C3.25 19.7426 4.25736 20.75 5.5 20.75H18.5001C19.7427 20.75 20.7501 19.7426 20.7501 18.5V5.5C20.7501 4.25736 19.7427 3.25 18.5001 3.25H5.5ZM4.75 5.5C4.75 5.08579 5.08579 4.75 5.5 4.75H18.5001C18.9143 4.75 19.2501 5.08579 19.2501 5.5V18.5C19.2501 18.9142 18.9143 19.25 18.5001 19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5V5.5ZM6.25005 9.7143C6.25005 9.30008 6.58583 8.9643 7.00005 8.9643L17 8.96429C17.4143 8.96429 17.75 9.30008 17.75 9.71429C17.75 10.1285 17.4143 10.4643 17 10.4643L7.00005 10.4643C6.58583 10.4643 6.25005 10.1285 6.25005 9.7143ZM6.25005 14.2857C6.25005 13.8715 6.58583 13.5357 7.00005 13.5357H17C17.4143 13.5357 17.75 13.8715 17.75 14.2857C17.75 14.6999 17.4143 15.0357 17 15.0357H7.00005C6.58583 15.0357 6.25005 14.6999 6.25005 14.2857Z"
+                                        d="M3.25 5.5C3.25 4.25736 4.25736 3.25 5.5 3.25H18.5C19.7426 3.25 20.75 4.25736 20.75 5.5V18.5C20.75 19.7426 19.7426 20.75 18.5 20.75H5.5C4.25736 20.75 3.25 19.7426 3.25 18.5V5.5ZM5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5V8.58325L19.25 8.58325V5.5C19.25 5.08579 18.9142 4.75 18.5 4.75H5.5ZM19.25 10.0833H15.416V13.9165H19.25V10.0833ZM13.916 10.0833L10.083 10.0833V13.9165L13.916 13.9165V10.0833ZM8.58301 10.0833H4.75V13.9165H8.58301V10.0833ZM4.75 18.5V15.4165H8.58301V19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5ZM10.083 19.25V15.4165L13.916 15.4165V19.25H10.083ZM15.416 19.25V15.4165H19.25V18.5C19.25 18.9142 18.9142 19.25 18.5 19.25H15.416Z"
                                         fill=""
                                     />
                                 </svg>

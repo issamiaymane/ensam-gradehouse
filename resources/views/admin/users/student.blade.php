@@ -7,7 +7,6 @@
 @section('content')
     <main>
         <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6">
-            <!-- Breadcrumb Start -->
             <div x-data="{ pageName: `Manage Students`}">
                 <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
                     <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90" x-text="pageName"></h2>
@@ -26,11 +25,7 @@
                     </nav>
                 </div>
             </div>
-            <!-- Breadcrumb End -->
-
-            <!-- ====== Add Student Form Section Start ====== -->
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-
                 <!-- Add Student Form -->
                 <div class="space-y-6">
                     <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
@@ -68,7 +63,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Student List -->
                 <div class="space-y-6">
                     <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
@@ -104,9 +98,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!-- ====== Add Student Form Section End ====== -->
         </div>
     </main>
 @endsection

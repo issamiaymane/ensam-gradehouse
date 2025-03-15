@@ -4,20 +4,28 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTeachersTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
+        // database/migrations/xxxx_xx_xx_create_teachers_table.php
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('phone');
             $table->string('department');
+            $table->softDeletes();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('teachers');
     }
-}
+};

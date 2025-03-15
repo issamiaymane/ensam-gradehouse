@@ -15,14 +15,9 @@ class Subject extends Model
         'name',
     ];
 
-
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class);
+    // Relationship to ClassroomSubject
+    public function classroomSubjects() {
+        return $this->hasMany(ClassroomSubject::class, 'subject_id');
     }
 
-    public function teachers()
-    {
-        return $this->belongsToMany(Teacher::class, 'teacher_subject');
-    }
 }

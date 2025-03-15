@@ -4,20 +4,28 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMajorsTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
+        // database/migrations/xxxx_xx_xx_create_majors_table.php
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('majors');
     }
-}
+};

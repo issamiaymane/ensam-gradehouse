@@ -1,14 +1,12 @@
 @extends('layouts.app')
 
 @section('title')
-    Assign Teachers to Subjects
+    Assign Teacher to Subject
 @endsection
 
-@section('content')
-    <main>
+@section('content')    <main>
         <div class="mx-auto max-w-(--breakpoint-2xl) p-4 md:p-6">
-            <!-- Breadcrumb Start -->
-            <div x-data="{ pageName: 'Assign Teachers to Subjects' }">
+            <div x-data="{ pageName: 'Assign Teacher to Subject' }">
                 <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
                     <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90" x-text="pageName"></h2>
                     <nav>
@@ -26,19 +24,18 @@
                     </nav>
                 </div>
             </div>
-            <!-- Breadcrumb End -->
 
-            <!-- Assign Teacher Form -->
+            <!-- Assign Teacher to Subject Form -->
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5">
                     <h3 class="text-base font-medium text-gray-800 dark:text-white/90">Assign Teacher to Subject</h3>
                 </div>
                 <div class="space-y-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
                     @include('layouts.messages')
-                    <form action="{{ route('subject.assign.store') }}" method="POST">
-                        {{ csrf_field() }}
+                    <form action="{{ route('admin.storeTeacherSubjectAssignment') }}" method="POST">
+                        @csrf
 
-                        <!-- Teacher Input -->
+                        <!-- Teacher Dropdown -->
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Teacher</label>
                             <select
@@ -47,21 +44,25 @@
                                 required
                             >
                                 @foreach($teachers as $teacher)
-                                    <option value="{{ $teacher->id }}">{{ $teacher->user->first_name }} {{ $teacher->user->last_name }}</option>
+                                    <option value="{{ $teacher->id }}">{{ $teacher->user->last_name ?? 'N/A' }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <!-- Subject Input -->
+                        <!-- Classroom-Subject Dropdown -->
                         <div>
-                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Subject</label>
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Classroom-Subject</label>
                             <select
-                                name="subject_id"
+                                name="classroom_subject_id"
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 required
                             >
-                                @foreach($subjects as $subject)
-                                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                @foreach($classroomSubjects as $classroomSubject)
+                                    <option value="{{ $classroomSubject->id }}">
+                                        {{ $classroomSubject->classroomSchoolYear->classroom->name ?? 'N/A' }} -
+                                        {{ $classroomSubject->subject->name ?? 'N/A' }}
+                                        ({{ $classroomSubject->subject_code ?? 'N/A' }} - {{ $classroomSubject->semester ?? 'N/A' }})
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -72,48 +73,44 @@
                                 type="submit"
                                 class="w-full rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 dark:bg-brand-600 dark:hover:bg-brand-700 dark:focus:ring-brand-600"
                             >
-                                Assign Teacher
+                                Assign Teacher to Subject
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Existing Assignments Table -->
+            <!-- Existing Teacher-Subject Assignments Table -->
             <div class="mt-6 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5">
-                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">Existing Assignments</h3>
+                    <h3 class="text-base font-medium text-gray-800 dark:text-white/90">Existing Teacher-Subject Assignments</h3>
                 </div>
                 <div class="border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
-                            <thead class="bg-gray-50 dark:bg-gray-900">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Teacher</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Subject</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Actions</th>
-                            </tr>
-                            </thead>
                             <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-gray-900">
-                            @foreach($assignments as $assignment)
+                            <!-- Loop through teacher-subject assignments -->
+                            @foreach($teacherSubjectAssignments as $assignment)
                                 <tr>
-                                    <!-- Teacher Name -->
                                     <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">
-                                        {{ $assignment->teacher->user->first_name }} {{ $assignment->teacher->user->last_name }}
+                                        {{ $assignment->teacher->user->last_name ?? 'N/A' }}
                                     </td>
-                                    <!-- Subject Name -->
                                     <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">
-                                        {{ $assignment->subject->name }}
+                                        {{ $assignment->classroomSubject->classroomSchoolYear->classroom->name ?? 'N/A' }} -
+                                        {{ $assignment->classroomSubject->subject->name ?? 'N/A' }}
+                                        ({{ $assignment->classroomSubject->subject_code ?? 'N/A' }} - {{ $assignment->classroomSubject->semester ?? 'N/A' }})
                                     </td>
-                                    <!-- Actions -->
                                     <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">
-                                        <form action="{{ route('subject.assign.delete', $assignment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this assignment?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs ring-1 ring-inset ring-gray-300 transition hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03]">
-                                                Delete
-                                            </button>
-                                        </form>
+                                        <div class="flex items-center gap-2">
+                                            <!-- Delete Button -->
+                                            <form action="{{ route('admin.deleteTeacherSubjectAssignment', $assignment->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this assignment?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs ring-1 ring-inset ring-gray-300 transition hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03]">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -124,4 +121,4 @@
             </div>
         </div>
     </main>
-    @endsection
+@endsection

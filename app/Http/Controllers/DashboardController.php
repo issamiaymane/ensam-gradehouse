@@ -2,26 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
+use App\Models\Grade;
 use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalStudents = Student::count();
+        // Ensure the authenticated user is an admin
+        $user = Auth::user();
 
-        $lastMonthStudents = Student::whereHas('user', function ($query) {
-            $query->whereDate('created_at', '<', Carbon::now()->subMonth());
-        })->count();
-
-        if ($lastMonthStudents > 0) {
-            $percentageChange = (($totalStudents - $lastMonthStudents) / $lastMonthStudents) * 100;
-        } else {
-            $percentageChange = 0; // Évite la division par zéro
+        if ($user->role !== 'admin') {
+            return redirect()->route('home')->with('error', 'You do not have access to the admin dashboard.');
         }
 
-        return view('admin.dashboard', compact('totalStudents', 'percentageChange'));
+        // Calculate total students in the system
+        $totalStudents = Student::count();
+
+        // Calculate total teachers in the system
+        $totalTeachers = Teacher::count();
+
+        // Calculate total classrooms in the system
+        $totalClassrooms = Classroom::count();
+
+        // Calculate average grade across all students
+        $averageGrade = Grade::where('status', 'approved')->avg('grade') ?? 0;
+
+        // Calculate percentage change in total students (example: compare with previous year)
+        $previousTotalStudents = User::where('role', 'admin')
+            ->where('created_at', '<', now()->subYear())
+            ->count();
+        $percentageChange = $previousTotalStudents > 0
+            ? (($totalStudents - $previousTotalStudents) / $previousTotalStudents) * 100
+            : 0;
+
+        // Pass the data to the view
+        return view('admin.dashboard', [
+            'totalStudents' => $totalStudents,
+            'totalTeachers' => $totalTeachers,
+            'totalClassrooms' => $totalClassrooms,
+            'averageGrade' => $averageGrade,
+            'percentageChange' => $percentageChange,
+        ]);
     }
 }

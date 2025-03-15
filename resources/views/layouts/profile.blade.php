@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Add Admins
+    Profil
 @endsection
 
 @section('content')

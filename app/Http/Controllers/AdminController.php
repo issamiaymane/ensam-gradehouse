@@ -2,76 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Subject;
+
+use App\Models\Classroom;
+use App\Models\ClassroomSubject;
+use App\Models\ClassroomSchoolYear;
+
 use Illuminate\Http\Request;
-use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function create()
-    {
-        // Load admins with their associated user data
-        $admins = Admin::with('user')->get();
-
-        return view('admin.users.admin', compact('admins'));
+    // Link Classroom to School Year
+    public function linkClassroomToSchoolYear() {
+        $classrooms = Classroom::all();
+        $classroomSchoolYears = ClassroomSchoolYear::with('classroom')->get();
+        return view('admin.classrooms.classroom_school_year', compact('classrooms', 'classroomSchoolYears'));
     }
 
-    public function store(Request $request)
-    {
-        // Validate the request data
+    public function storeClassroomSchoolYear(Request $request) {
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6',
-            'phone' => 'required|string|max:20',
-            'service' => 'required|string|max:255',
+            'classroom_id' => 'required|exists:classrooms,id',
+            'school_year' => 'required|string',
         ]);
 
-        try {
-            // Create the user first
-            $user = new User();
-            $user->first_name = trim($request->first_name);
-            $user->last_name = trim($request->last_name);
-            $user->email = trim($request->email);
-            $user->password = Hash::make($request->password);
-            $user->role = "admin";
-            $user->save();
+        ClassroomSchoolYear::create([
+            'classroom_id' => $request->classroom_id,
+            'school_year' => $request->school_year,
+        ]);
 
-            // Now create the admin linked to the user
-            $admin = new Admin();
-            $admin->user_id = $user->id; // Link the admin to the created user
-            $admin->phone = trim($request->phone);
-            $admin->service = trim($request->service);
-            $admin->save();
-
-            return redirect()->route('admin.create')->with('success', 'Admin added successfully!');
-        }
-        catch (\Exception $e) {
-            // Handle the error
-        return redirect()->route('teacher.create')->with('error', 'An error occurred while adding the teacher: ' . $e->getMessage());
-        }
+        return redirect()->route('admin.linkClassroomToSchoolYear')->with('success', 'Classroom linked to school year successfully.');
     }
 
-    public function delete($id)
-    {
-        // Find the admin by ID
-        $admin = Admin::findOrFail($id);
+    public function deleteClassroomSchoolYear($id) {
+        ClassroomSchoolYear::findOrFail($id)->delete();
+        return redirect()->route('admin.linkClassroomToSchoolYear')->with('success', 'Link deleted successfully.');
+    }
 
-        // Get the associated user
-        $user = $admin->user;
+    // Assign Subjects to Classroom
+    public function assignSubjectToClassroom() {
 
-        // Delete the admin first
-        $admin->delete();
+        $classroomSchoolYears = ClassroomSchoolYear::with('classroom')->get();
+        $subjects = Subject::all();
+        $classroomSubjects = ClassroomSubject::with(['classroomSchoolYear.classroom', 'subject'])->get();
+        return view('admin.classrooms.classroom_subject', compact('classroomSchoolYears', 'subjects', 'classroomSubjects'));
+    }
 
-        // Delete the associated user
-        if ($user) {
-            $user->delete();
-        }
+    public function storeClassroomSubject(Request $request) {
+        $request->validate([
+            'classroom_school_year_id' => 'required|exists:classroom_school_year,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'subject_code' => 'required|string',
+            'semester' => 'required|string',
+        ]);
 
-        // Redirect back with a success message
-        return redirect()->route('admin.create')->with('success', 'Admin deleted successfully!');
+        ClassroomSubject::create([
+            'classroom_school_year_id' => $request->classroom_school_year_id,
+            'subject_id' => $request->subject_id,
+            'subject_code' => $request->subject_code,
+            'semester' => $request->semester,
+        ]);
+
+        return redirect()->route('admin.assignSubjectToClassroom')->with('success', 'Subject assigned to classroom successfully.');
+    }
+
+    public function deleteClassroomSubject($id) {
+        ClassroomSubject::findOrFail($id)->delete();
+        return redirect()->route('admin.assignSubjectToClassroom')->with('success', 'Assignment deleted successfully.');
     }
 
 }

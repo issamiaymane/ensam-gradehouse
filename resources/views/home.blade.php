@@ -12,7 +12,7 @@
     <link href="{{ asset('style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body
+<div
     x-data="{ page: 'comingSoon', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -32,22 +32,24 @@
 
     </div>
     <!-- ===== Preloader End ===== -->
-    <nav class="fixed w-full bg-white dark:bg-gray-900/90 backdrop-blur-md z-50 shadow-sm">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <a href="#" class="flex items-center">
-                    <img src="{{url('images/logo/favicon.png')}}" alt="ENSAM Logo" class="h-12 w-auto">
-                    <span class="ml-3 text-xl font-bold text-gray-800 dark:text-white">GradeHouse</span>
-                </a>
-
-                <div class="flex items-center space-x-6">
-                    <a href="{{url('sign-in')}}" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2 rounded-lg transition-all duration-300">
-                        Sign In <i class="ml-2 fas fa-arrow-right"></i>
+    <div class="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0"
+        <nav class="fixed w-full bg-white dark:bg-gray-900/90 backdrop-blur-md z-50 shadow-sm">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <a href="#" class="flex items-center">
+                        <img src="{{url('images/logo/favicon.png')}}" alt="ENSAM Logo" class="h-12 w-auto">
+                        <span class="ml-3 text-xl font-bold text-gray-800 dark:text-white">GradeHouse</span>
                     </a>
+
+                    <div class="flex items-center space-x-6">
+                        <a href="{{url('sign-in')}}" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2 rounded-lg transition-all duration-300">
+                            Sign In <i class="ml-2 fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </div>
     <!-- ===== Page Wrapper Start ===== -->
     <div
         class="relative z-1 flex min-h-screen flex-col items-center justify-center overflow-hidden p-6"

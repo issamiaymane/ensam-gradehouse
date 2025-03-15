@@ -27,8 +27,6 @@
                     </nav>
                 </div>
             </div>
-            <!-- Breadcrumb End -->
-
             <!-- Add Subject Form -->
             <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5">
@@ -38,32 +36,6 @@
                     @include('layouts.messages')
                     <form action="{{ route('subject.store') }}" method="POST">
                         {{ csrf_field() }}
-
-                        <!-- Classroom Input -->
-                        <div>
-                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Classroom</label>
-                            <select
-                                name="classroom_id"
-                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-                                required
-                            >
-                                @foreach($classrooms as $classroom)
-                                    <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Code Input -->
-                        <div>
-                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Code</label>
-                            <input
-                                type="text"
-                                name="code"
-                                placeholder="Enter subject code. Example: S1M1.1"
-                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
-                                required
-                            />
-                        </div>
 
                         <!-- Name Input -->
                         <div>
@@ -90,7 +62,6 @@
 
                 </div>
             </div>
-
             <!-- Subjects Table -->
             <div class="mt-6 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                 <div class="px-5 py-4 sm:px-6 sm:py-5">
@@ -101,22 +72,13 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
                             <thead class="bg-gray-50 dark:bg-gray-900">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Classroom</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Code</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Name</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Actions</th>
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-gray-900">
-                            <!-- Loop through Subjects and display each one -->
                             @foreach($subjects as $subject)
                                 <tr>
-                                    <!-- Display the classroom name -->
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">
-                                        <!-- Check if a classroom exists for the subject, otherwise show a default message -->
-                                        {{ $subject->classroom ? $subject->classroom->name : 'No classroom assigned' }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->code }}</td>
                                     <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->name }}</td>
                                     <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">
                                         <div class="flex items-center gap-2">
@@ -144,8 +106,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
         </div>
     </main>
 @endsection
