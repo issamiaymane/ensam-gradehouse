@@ -27,4 +27,9 @@ class ClassroomSchoolYear extends Model
     {
         return $this->belongsTo(Classroom::class, 'classroom_id');
     }
+
+    public function classroomSubjects()
+    {
+        return $this->hasMany(ClassroomSubject::class, 'classroom_school_year_id');
+    }
 }

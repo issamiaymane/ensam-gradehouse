@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AcademicController;
 use App\Http\Controllers\AssignmentController;
@@ -76,6 +78,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('admin/assignments/student', [AssignmentController::class, 'assignStudentToClassroom'])->name('admin.assignStudentToClassroom');
         Route::post('admin/assignments/student', [AssignmentController::class, 'storeClassroomStudentAssignment'])->name('admin.storeClassroomStudent');
         Route::delete('admin/assignments/student/{id}', [AssignmentController::class, 'deleteClassroomStudentAssignment'])->name('admin.deleteClassroomStudent');
+
+     //Grades
+        Route::get('/classrooms', [ClassroomController::class, 'index'])->name('admin.classrooms.index');
+        Route::get('/classrooms/{classroom_school_year}/subjects', [ClassroomController::class, 'subjects'])->name('admin.classrooms.subjects');
+        Route::get('/classrooms/{classroom_school_year}/subjects/{classroom_subject}/grades', [ClassroomController::class, 'grades'])->name('admin.classrooms.subjects.grades');
+        Route::put('/classrooms/{classroom_school_year}/subjects/{classroom_subject}/approve', [ClassroomController::class, 'approveGrades'])->name('admin.classrooms.subjects.approve');
+        Route::put('/classrooms/{classroom_school_year}/subjects/{classroom_subject}/reject', [ClassroomController::class, 'rejectGrades'])->name('admin.classrooms.subjects.reject');
 });
 
 Route::group(['middleware' => 'teacher'], function () {
