@@ -90,7 +90,7 @@
                         <form action="{{ route('admin.classrooms.subjects.reject', [$classroomSubject->classroomSchoolYear->id, $classroomSubject->id]) }}" method="POST" class="mt-3">
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-red-500 shadow-theme-xs hover:bg-red-600">
+                            <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs ring-1 ring-inset ring-gray-300 transition hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03]">
                                 Reject All Grades
                             </button>
                         </form>

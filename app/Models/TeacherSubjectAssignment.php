@@ -17,17 +17,17 @@ class TeacherSubjectAssignment extends Model
         'classroom_subject_id',
     ];
 
-    // Relationship to Teacher
     public function teacher() {
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
 
-
-    // Relationship to ClassroomSubject
     public function classroomSubject(): BelongsTo
     {
         return $this->belongsTo(ClassroomSubject::class, 'classroom_subject_id');
     }
+
+
+
 
     // Relationship to Subject (via ClassroomSubject)
     public function subject()

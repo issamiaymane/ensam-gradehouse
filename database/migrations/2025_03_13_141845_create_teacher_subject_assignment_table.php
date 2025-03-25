@@ -16,8 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
             $table->foreignId('classroom_subject_id')->constrained('classroom_subject')->onDelete('cascade');
-            // Donner un nom plus court à l'index unique
-            $table->unique(['teacher_id', 'classroom_subject_id'], 'teacher_subject_unique');
+            $table->unique(['teacher_id', 'classroom_subject_id'], 'teacher_subject_assignment_unique');
             $table->timestamps();
             $table->softDeletes();
         });

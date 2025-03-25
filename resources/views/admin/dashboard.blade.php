@@ -127,9 +127,9 @@
                             </div>
                             <div class="relative max-h-[195px]">
                                 <div id="chartTwo" class="h-full"></div>
-                                <span class="absolute left-1/2 top-[85%] -translate-x-1/2 -translate-y-[85%] rounded-full bg-success-50 px-3 py-1 text-xs font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">+8%</span>
+                                <span class="absolute left-1/2 top-[85%] -translate-x-1/2 -translate-y-[85%] rounded-full bg-success-50 px-3 py-1 text-xs font-medium text-success-600 dark:bg-success-500/15 dark:text-success-500">+0%</span>
                             </div>
-                            <p class="mx-auto mt-1.5 w-full max-w-[380px] text-center text-sm text-gray-500 sm:text-base">Most students are scoring above 80% this semester.</p>
+                            <p class="mx-auto mt-1.5 w-full max-w-[380px] text-center text-sm text-gray-500 sm:text-base">Most students are scoring above 11 this semester.</p>
                         </div>
                     </div>
                 </div>

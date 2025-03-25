@@ -333,6 +333,15 @@
                                 >
                                     <li>
                                         <a
+                                            href="{{ url('admin/assignments/subject') }}"
+                                            class="menu-dropdown-item group"
+                                            :class="(page === 'Assignments' || '{{ Request::segment(3) }}' === 'subject') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                        >
+                                            Assign Subjects
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
                                             href="{{ url('admin/assignments/teacher') }}"
                                             class="menu-dropdown-item group"
                                             :class="(page === 'Assignments' || '{{ Request::segment(3) }}' === 'teacher') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
@@ -412,20 +421,11 @@
                                 >
                                     <li>
                                         <a
-                                            href="#"
+                                            href="{{url('admin/grades/classrooms')}}"
                                             class="menu-dropdown-item group"
-                                            :class="page === 'viewGrades' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                            :class="(page === 'Grades' || '{{ Request::segment(2) }}' === 'grades') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
                                         >
                                             View Grades
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="menu-dropdown-item group"
-                                            :class="page === 'editGrades' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
-                                        >
-                                            Edit/Update Grades
                                         </a>
                                     </li>
                                     <li>
@@ -441,7 +441,6 @@
                             </div>
                             <!-- Dropdown Menu End -->
                         </li>
-
                     </ul>
                 </div>
                 <!-- Others Group -->
@@ -476,7 +475,7 @@
                         <!-- Menu Item Settings -->
                         <li>
                             <a
-                                href="{{ url('admin/settings') }}"
+                                href="{{ url('admin/settings/link-classroom-to-school-year') }}"
                                 @click="selected = (selected === 'Settings' ? '' : 'Settings')"
                                 class="menu-item group"
                                 :class="(selected === 'Settings' || '{{ Request::segment(2) }}' === 'settings') ? 'menu-item-active' : 'menu-item-inactive'"

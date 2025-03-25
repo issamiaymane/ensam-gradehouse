@@ -33,7 +33,7 @@
                 </div>
                 <div class="space-y-6 border-t border-gray-100 p-5 sm:p-6 dark:border-gray-800">
                     @include('layouts.messages')
-                    <form action="{{ route('admin.storeClassroomSubject') }}" method="POST">
+                    <form action="{{ route('admin.storeSubjectClassroom') }}" method="POST">
                         @csrf
 
                         <!-- Classroom-School Year Dropdown -->
@@ -160,7 +160,7 @@
                                                 Edit
                                             </a>
                                             <!-- Delete Button -->
-                                            <form action="{{ route('admin.deleteClassroomSubject', $classroomSubject->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this assignment?');">
+                                            <form action="{{ route('admin.deleteSubjectClassroom', $classroomSubject->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this assignment?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs ring-1 ring-inset ring-gray-300 transition hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03]">

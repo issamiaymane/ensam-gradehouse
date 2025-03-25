@@ -1,48 +1,74 @@
 @extends('layouts.app')
 
+@section('title')
+    Classrooms by School Year
+@endsection
+
 @section('content')
-    <div class="container">
-        <h1>Submitted Grades for Approval</h1>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Student</th>
-                <th>Subject</th>
-                <th>Classroom</th>
-                <th>Major</th>
-                <th>School Year</th>
-                <th>Grade</th>
-                <th>Semester</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($grades as $grade)
-                <tr>
-                    <td>{{ $grade->student_name }}</td>
-                    <td>{{ $grade->subject_name }} ({{ $grade->subject_code }})</td>
-                    <td>{{ $grade->classroom_name }} (Year {{ $grade->year_of_study }})</td>
-                    <td>{{ $grade->major_name }} ({{ $grade->major_code }})</td>
-                    <td>{{ $grade->school_year }}</td>
-                    <td>{{ $grade->grade }}</td>
-                    <td>{{ $grade->semester }}</td>
-                    <td>{{ $grade->status }}</td>
-                    <td>
-                        <form action="{{ route('admin.grades.approve', $grade->grade_id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                        </form>
-                        <form action="{{ route('admin.grades.reject', $grade->grade_id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+    <main>
+        <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+            <div class="space-y-5 sm:space-y-6">
+                <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                    <!-- Header -->
+                    <div class="px-5 py-4 sm:px-6 sm:py-5">
+                        <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
+                            Classrooms by School Year
+                        </h3>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="p-5 border-t border-gray-100 dark:border-gray-800 sm:p-6 max-w-6xl mx-auto">
+                        <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                            <div class="max-w-full overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                    <tr class="border-b border-gray-100 dark:border-gray-800">
+                                        <th class="px-5 py-3 sm:px-6">
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Classroom</p>
+                                        </th>
+                                        <th class="px-5 py-3 sm:px-6">
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Major</p>
+                                        </th>
+                                        <th class="px-5 py-3 sm:px-6">
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">School Year</p>
+                                        </th>
+                                        <th class="px-5 py-3 sm:px-6">
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Actions</p>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                                    @foreach ($classroomSchoolYears as $csy)
+                                        <tr>
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <p class="text-gray-800 text-theme-sm dark:text-white/90">
+                                                    {{ $csy->classroom->name }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <p class="text-gray-800 text-theme-sm dark:text-white/90">
+                                                    {{ $csy->classroom->major->name }})
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <p class="text-gray-800 text-theme-sm dark:text-white/90">
+                                                    {{ $csy->school_year }}
+                                                </p>
+                                            </td>
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <a href="{{ route('admin.classrooms.subjects', $csy->id) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
+                                                    View Subjects
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 @endsection

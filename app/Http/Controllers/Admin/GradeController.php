@@ -1,41 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\AdminApproval;
-use Illuminate\Http\Request;
 use App\Models\ClassroomSchoolYear;
 use App\Models\ClassroomSubject;
 use App\Models\Grade;
-use DB;
+use Illuminate\Http\Request;
 
-class ClassroomController extends Controller
+class GradeController extends Controller
 {
-    /**
-     * Display a list of classroom_school_year entries.
-     */
     public function index()
     {
         $classroomSchoolYears = ClassroomSchoolYear::with(['classroom.major', 'classroom'])
             ->get();
 
-        return view('admin.classrooms.index', compact('classroomSchoolYears'));
+        return view('admin.grades.index', compact('classroomSchoolYears'));
     }
-
-    /**
-     * Display subjects for a specific classroom_school_year.
-     */
     public function subjects($classroomSchoolYearId)
     {
         $classroomSchoolYear = ClassroomSchoolYear::with(['classroom.major', 'classroomSubjects.subject'])
             ->findOrFail($classroomSchoolYearId);
 
-        return view('admin.classrooms.subjects', compact('classroomSchoolYear'));
+        return view('admin.grades.subjects', compact('classroomSchoolYear'));
     }
 
-    /**
-     * Display grades for a specific classroom_subject.
-     */
     public function grades($classroomSchoolYearId, $classroomSubjectId)
     {
         // Fetch the classroom subject with its grades and related data
@@ -45,12 +35,9 @@ class ClassroomController extends Controller
             'grades.adminApprovals', // Eager load admin approvals
         ])->findOrFail($classroomSubjectId);
 
-        return view('admin.classrooms.grades', compact('classroomSubject'));
+        return view('admin.grades.grades', compact('classroomSubject'));
     }
 
-    /**
-     * Approve grades for a specific classroom_subject.
-     */
     public function approveGrades(Request $request, $classroomSchoolYearId, $classroomSubjectId)
     {
         // Find the classroom subject
@@ -70,7 +57,7 @@ class ClassroomController extends Controller
                 'grade_id' => $grade->id,
                 'admin_id' => auth()->id(), // Assuming the admin is logged in
                 'status' => 'approved',
-                'comment' => 'Grades approved by admin.',
+                'comment' => 'Grades approved.',
                 'reviewed_at' => now(),
             ]);
         }
@@ -98,7 +85,7 @@ class ClassroomController extends Controller
                 'grade_id' => $grade->id,
                 'admin_id' => auth()->id(), // Assuming the admin is logged in
                 'status' => 'rejected',
-                'comment' => 'Grades rejected by admin.',
+                'comment' => 'Grades rejected.',
                 'reviewed_at' => now(),
             ]);
         }

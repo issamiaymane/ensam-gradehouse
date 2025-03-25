@@ -1,17 +1,20 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ClassroomController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AcademicController;
-use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\AcademicController;
+use App\Http\Controllers\Admin\AssignmentController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GradeController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UserController;
+
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+
 
 Route::get('/', function () {
     return view('home');
@@ -25,6 +28,10 @@ Route::get('sign-in', [AuthController::class, 'login']);
 Route::post('sign-in', [AuthController::class, 'AuthLogin']);
 
 Route::get('logout', [AuthController::class, 'logout']);
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::put('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.change-password');
 
 Route::group(['middleware' => 'admin'], function () {
     //Dashboard
@@ -58,39 +65,43 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('admin/classrooms', [AcademicController::class, 'createClassroom'])->name('classroom.create');
         Route::post('admin/classrooms', [AcademicController::class, 'storeClassroom'])->name('classroom.store');
         Route::delete('admin/classrooms/{id}', [AcademicController::class, 'deleteClassroom'])->name('classroom.delete');
-            // Link Classroom to School Year
-            Route::get('admin/link-classroom-to-school-year', [AdminController::class, 'linkClassroomToSchoolYear'])->name('admin.linkClassroomToSchoolYear');
-            Route::post('admin/store-classroom-school-year', [AdminController::class, 'storeClassroomSchoolYear'])->name('admin.storeClassroomSchoolYear');
-            Route::delete('admin/delete-classroom-school-year/{id}', [AdminController::class, 'deleteClassroomSchoolYear'])->name('admin.deleteClassroomSchoolYear');
-            // Assign Subjects to Classroom
-            Route::get('admin/assign-subject-to-classroom', [AdminController::class, 'assignSubjectToClassroom'])->name('admin.assignSubjectToClassroom');
-            Route::post('admin/store-classroom-subject', [AdminController::class, 'storeClassroomSubject'])->name('admin.storeClassroomSubject');
-            Route::delete('admin/delete-classroom-subject/{id}', [AdminController::class, 'deleteClassroomSubject'])->name('admin.deleteClassroomSubject');
 
 
 
     //Assignments
+        // Assign Subjects to Classroom
+        Route::get('admin/assignments/subject', [AssignmentController::class, 'assignSubjectToClassroom'])->name('admin.assignSubjectToClassroom');
+        Route::post('admin/assignments/subject', [AssignmentController::class, 'storeSubjectClassroom'])->name('admin.storeSubjectClassroom');
+        Route::delete('admin/assignments/subject/{id}', [AssignmentController::class, 'deleteSubjectClassroom'])->name('admin.deleteSubjectClassroom');
         // Assign Teacher to Subject
-        Route::get('/admin/assignments/teacher', [AssignmentController::class, 'assignTeacherToSubject'])->name('admin.assignTeacherToSubject');
-        Route::post('/admin/assignments/teacher', [AssignmentController::class, 'storeTeacherSubjectAssignment'])->name('admin.storeTeacherSubjectAssignment');
-        Route::delete('/admin/assignments/teacher/{id}', [AssignmentController::class, 'deleteTeacherSubjectAssignment'])->name('admin.deleteTeacherSubjectAssignment');
+        Route::get('admin/assignments/teacher', [AssignmentController::class, 'assignTeacherToSubject'])->name('admin.assignTeacherToSubject');
+        Route::post('admin/assignments/teacher', [AssignmentController::class, 'storeTeacherSubjectAssignment'])->name('admin.storeTeacherSubjectAssignment');
+        Route::delete('admin/assignments/teacher/{id}', [AssignmentController::class, 'deleteTeacherSubjectAssignment'])->name('admin.deleteTeacherSubjectAssignment');
         //Assign Student to Classroom;
         Route::get('admin/assignments/student', [AssignmentController::class, 'assignStudentToClassroom'])->name('admin.assignStudentToClassroom');
         Route::post('admin/assignments/student', [AssignmentController::class, 'storeClassroomStudentAssignment'])->name('admin.storeClassroomStudent');
         Route::delete('admin/assignments/student/{id}', [AssignmentController::class, 'deleteClassroomStudentAssignment'])->name('admin.deleteClassroomStudent');
 
      //Grades
-        Route::get('/classrooms', [ClassroomController::class, 'index'])->name('admin.classrooms.index');
-        Route::get('/classrooms/{classroom_school_year}/subjects', [ClassroomController::class, 'subjects'])->name('admin.classrooms.subjects');
-        Route::get('/classrooms/{classroom_school_year}/subjects/{classroom_subject}/grades', [ClassroomController::class, 'grades'])->name('admin.classrooms.subjects.grades');
-        Route::put('/classrooms/{classroom_school_year}/subjects/{classroom_subject}/approve', [ClassroomController::class, 'approveGrades'])->name('admin.classrooms.subjects.approve');
-        Route::put('/classrooms/{classroom_school_year}/subjects/{classroom_subject}/reject', [ClassroomController::class, 'rejectGrades'])->name('admin.classrooms.subjects.reject');
+        Route::get('admin/grades/classrooms', [GradeController::class, 'index'])->name('admin.classrooms.index');
+        Route::get('admin/grades/classrooms/{classroom_school_year}/subjects', [GradeController::class, 'subjects'])->name('admin.classrooms.subjects');
+        Route::get('admin/grades/classrooms/{classroom_school_year}/subjects/{classroom_subject}/grades', [GradeController::class, 'grades'])->name('admin.classrooms.subjects.grades');
+        Route::put('admin/grades/classrooms/{classroom_school_year}/subjects/{classroom_subject}/approve', [GradeController::class, 'approveGrades'])->name('admin.classrooms.subjects.approve');
+        Route::put('admin/grades/classrooms/{classroom_school_year}/subjects/{classroom_subject}/reject', [GradeController::class, 'rejectGrades'])->name('admin.classrooms.subjects.reject');
+
+    ///Settings
+            // Link Classroom to School Year
+            Route::get('admin/settings/link-classroom-to-school-year', [SettingController::class, 'linkClassroomToSchoolYear'])->name('admin.linkClassroomToSchoolYear');
+            Route::post('admin/settings/store-classroom-school-year', [SettingController::class, 'storeClassroomSchoolYear'])->name('admin.storeClassroomSchoolYear');
+            Route::delete('admin/settings/delete-classroom-school-year/{id}', [SettingController::class, 'deleteClassroomSchoolYear'])->name('admin.deleteClassroomSchoolYear');
+            // Students Promotion
 });
 
 Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/dashboard', [TeacherController::class, 'dashboard']);
-    Route::get('/subject/{classroomSubjectId}/students', [TeacherController::class, 'subjectStudents'])->name('teacher.subject.students');
-    Route::post('/grades/save', [TeacherController::class, 'saveGrades'])->name('grades.save');
+    Route::get('teacher/subject/{classroomSubjectId}/grades', [TeacherController::class, 'subjectStudents'])->name('teacher.subject.students');
+    Route::post('teacher/grades/save', [TeacherController::class, 'saveGrades'])->name('grades.save');
+    Route::post('teacher/grades/submit', [TeacherController::class, 'submitGrades'])->name('grades.submit');
 
     Route::get('teacher/calendar', function () {
         return view('teacher.calendar');

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 
+use App\Http\Controllers\Controller;
+use App\Models\Classroom;
 use App\Models\Major;
 use App\Models\Subject;
-use App\Models\Classroom;
 use Illuminate\Http\Request;
 
 class AcademicController extends Controller
@@ -100,7 +101,6 @@ class AcademicController extends Controller
         ]);
 
         try {
-            // Create the classroom in the database
             Classroom::create([
                 'major_id' => $request->major_id,
                 'level' => $request->level,

@@ -14,14 +14,14 @@ class Grade extends Model
         'grade',
         'status',
     ];
-    // Relationship to TeacherSubjectAssignment
-    public function teacherSubjectAssignment(): BelongsTo
-    {
-        return $this->belongsTo(TeacherSubjectAssignment::class, 'teacher_subject_assignment_id');
-    }
+
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');
+    }
+    public function teacherSubjectAssignment(): BelongsTo
+    {
+        return $this->belongsTo(TeacherSubjectAssignment::class, 'teacher_subject_assignment_id');
     }
     public function adminApprovals(): HasMany
     {

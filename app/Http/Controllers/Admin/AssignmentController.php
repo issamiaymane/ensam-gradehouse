@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 
 
+use App\Http\Controllers\Controller;
 use App\Models\ClassroomSchoolYear;
 use App\Models\ClassroomStudent;
 use App\Models\ClassroomSubject;
 use App\Models\Student;
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\TeacherSubjectAssignment;
 use Illuminate\Http\Request;
@@ -15,6 +17,44 @@ use Illuminate\Support\Facades\DB;
 
 class AssignmentController extends Controller
 {
+    // Subjects
+    public function assignSubjectToClassroom() {
+
+        $classroomSchoolYears = ClassroomSchoolYear::with('classroom')->get();
+        $subjects = Subject::all();
+        $classroomSubjects = ClassroomSubject::with(['classroomSchoolYear.classroom', 'subject'])->get();
+        return view('admin.assignments.classroom_subject', compact('classroomSchoolYears', 'subjects', 'classroomSubjects'));
+    }
+
+    public function storeSubjectClassroom(Request $request) {
+        $request->validate([
+            'classroom_school_year_id' => 'required|exists:classroom_school_year,id',
+            'subject_id' => 'required|exists:subjects,id',
+            'subject_code' => 'required|string',
+            'semester' => 'required|string',
+        ]);
+
+        try {
+            ClassroomSubject::create([
+                'classroom_school_year_id' => $request->classroom_school_year_id,
+                'subject_id' => $request->subject_id,
+                'subject_code' => $request->subject_code,
+                'semester' => $request->semester,
+            ]);
+
+            return redirect()->route('admin.assignSubjectToClassroom')->with('success', 'Subject assigned to classroom successfully.');
+
+        } catch (\Exception $e) {
+
+        return redirect()->route('admin.assignSubjectToClassroom')->with('error', 'An error occurred while adding the subject: ' . $e->getMessage());
+        }
+
+    }
+
+    public function deleteSubjectClassroom($id) {
+        ClassroomSubject::findOrFail($id)->delete();
+        return redirect()->route('admin.assignSubjectToClassroom')->with('success', 'Assignment deleted successfully.');
+    }
     // Teacher
     public function assignTeacherToSubject() {
         $teachers = Teacher::with('user')->whereHas('user')->get();
@@ -58,7 +98,6 @@ class AssignmentController extends Controller
         return view('admin.assignments.classroom_student', compact('students', 'classroomSchoolYears', 'classroomStudents'));
     }
 
-    // Store a new classroom-student assignment
     public function storeClassroomStudentAssignment(Request $request)
     {
         $request->validate([
@@ -93,8 +132,7 @@ class AssignmentController extends Controller
         }
     }
 
-    // Delete a classroom-student assignment
-    public function destroy($id)
+    public function deleteClassroomStudentAssignment($id)
     {
         try {
             DB::beginTransaction();

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
+
     public function dashboard()
     {
         // Get the authenticated user
@@ -34,24 +35,18 @@ class TeacherController extends Controller
         // Pass the data to the view
         return view('teacher.dashboard', compact('user', 'assignedSubjects'));
     }
-
     public function subjectStudents($classroomSubjectId)
     {
-        // Get the authenticated user
         $user = Auth::user();
-
-        // Ensure we have the related teacher model
         $teacher = $user->teacher;
 
         if (!$teacher) {
             return redirect()->route('home')->with('error', 'Teacher profile not found.');
         }
 
-        // Fetch the classroom subject
         $classroomSubject = ClassroomSubject::with(['subject', 'classroomSchoolYear.classroom'])
             ->findOrFail($classroomSubjectId);
 
-        // Fetch students enrolled in this classroom for the school year
         $students = ClassroomStudent::where('classroom_school_year_id', $classroomSubject->classroom_school_year_id)
             ->with(['student.user', 'grades' => function ($query) use ($classroomSubjectId) {
                 $query->whereHas('teacherSubjectAssignment', function ($subQuery) use ($classroomSubjectId) {
@@ -60,7 +55,6 @@ class TeacherController extends Controller
             }])
             ->get();
 
-        // Pass the data to the view
         return view('teacher.subject_students', compact('classroomSubject', 'students'));
     }
 
@@ -68,13 +62,19 @@ class TeacherController extends Controller
     {
         $classroomSubjectId = $request->input('classroom_subject_id');
         $students = $request->input('students');
-        $action = $request->input('action'); // 'save' or 'submit'
 
         foreach ($students as $studentData) {
             $studentId = $studentData['student_id'];
             $grade = $studentData['grade'];
 
-            // Find or create the grade record
+            $existingGrade = Grade::where('student_id', $studentId)
+                ->where('teacher_subject_assignment_id', $classroomSubjectId)
+                ->first();
+
+            if ($existingGrade && in_array($existingGrade->status, ['submitted', 'approved', 'rejected'])) {
+                return redirect()->back()->with('error', 'Cannot save. Already sent for approval or rejected.');
+            }
+
             Grade::updateOrCreate(
                 [
                     'student_id' => $studentId,
@@ -82,11 +82,49 @@ class TeacherController extends Controller
                 ],
                 [
                     'grade' => $grade,
-                    'status' => ($action === 'submit') ? 'submitted' : 'draft', // Set status based on action
+                    'status' => 'draft',
                 ]
             );
         }
 
-        return redirect()->back()->with('success', 'Grades ' . ($action === 'submit' ? 'submitted' : 'saved') . ' successfully!');
+        return redirect()->back()->with('success', 'Grades saved successfully!');
+    }
+
+    public function submitGrades(Request $request)
+    {
+        $classroomSubjectId = $request->input('classroom_subject_id');
+        $students = $request->input('students');
+
+        foreach ($students as $studentData) {
+            if (empty($studentData['grade'])) {
+                return redirect()->back()->with('error', 'All grades must be entered before submitting.');
+            }
+        }
+
+        foreach ($students as $studentData) {
+            $studentId = $studentData['student_id'];
+            $grade = $studentData['grade'];
+
+            $existingGrade = Grade::where('student_id', $studentId)
+                ->where('teacher_subject_assignment_id', $classroomSubjectId)
+                ->first();
+
+            if ($existingGrade && in_array($existingGrade->status, ['submitted', 'approved', 'rejected'])) {
+                return redirect()->back()->with('error', 'Cannot submit. Already sent for approval or rejected.');
+            }
+
+            Grade::updateOrCreate(
+                [
+                    'student_id' => $studentId,
+                    'teacher_subject_assignment_id' => $classroomSubjectId,
+                ],
+                [
+                    'grade' => $grade,
+                    'status' => 'submitted',
+                ]
+            );
+        }
+
+        return redirect()->back()->with('success', 'Grades submitted successfully!');
     }
 }

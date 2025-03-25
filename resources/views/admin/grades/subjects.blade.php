@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Classrooms by School Year
+    Subjects for {{ $classroomSchoolYear->classroom->name }}
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
                     <!-- Header -->
                     <div class="px-5 py-4 sm:px-6 sm:py-5">
                         <h3 class="text-base font-medium text-gray-800 dark:text-white/90">
-                            Classrooms by School Year
+                            Subjects for {{ $classroomSchoolYear->classroom->name }} ({{ $classroomSchoolYear->school_year }})
                         </h3>
                     </div>
 
@@ -24,13 +24,16 @@
                                     <thead>
                                     <tr class="border-b border-gray-100 dark:border-gray-800">
                                         <th class="px-5 py-3 sm:px-6">
-                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Classroom</p>
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Subject</p>
                                         </th>
                                         <th class="px-5 py-3 sm:px-6">
-                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Major</p>
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Subject Code</p>
                                         </th>
                                         <th class="px-5 py-3 sm:px-6">
-                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">School Year</p>
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Semester</p>
+                                        </th>
+                                        <th class="px-5 py-3 sm:px-6">
+                                            <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Status</p>
                                         </th>
                                         <th class="px-5 py-3 sm:px-6">
                                             <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Actions</p>
@@ -38,26 +41,37 @@
                                     </tr>
                                     </thead>
                                     <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                                    @foreach ($classroomSchoolYears as $csy)
+                                    @foreach ($classroomSchoolYear->classroomSubjects as $cs)
                                         <tr>
                                             <td class="px-5 py-4 sm:px-6">
                                                 <p class="text-gray-800 text-theme-sm dark:text-white/90">
-                                                    {{ $csy->classroom->name }}
+                                                    {{ $cs->subject->name }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-4 sm:px-6">
                                                 <p class="text-gray-800 text-theme-sm dark:text-white/90">
-                                                    {{ $csy->classroom->major->name }})
+                                                    {{ $cs->subject_code }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-4 sm:px-6">
                                                 <p class="text-gray-800 text-theme-sm dark:text-white/90">
-                                                    {{ $csy->school_year }}
+                                                    {{ $cs->semester }}
                                                 </p>
                                             </td>
                                             <td class="px-5 py-4 sm:px-6">
-                                                <a href="{{ route('admin.classrooms.subjects', $csy->id) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
-                                                    View Subjects
+                                                @if ($cs->grades->where('status', 'approved')->count() > 0)
+                                                    <span class="inline-flex items-center justify-center gap-1 rounded-full bg-success-500 px-2.5 py-0.5 text-sm font-medium text-white">
+                                                            Approved
+                                                        </span>
+                                                @else
+                                                    <span class="inline-flex items-center justify-center gap-1 rounded-full bg-gray-500 px-2.5 py-0.5 text-sm font-medium text-white">
+                                                            Not yet Approved
+                                                        </span>
+                                                @endif
+                                            </td>
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <a href="{{ route('admin.classrooms.subjects.grades', [$classroomSchoolYear->id, $cs->id]) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
+                                                    View Grades
                                                 </a>
                                             </td>
                                         </tr>
