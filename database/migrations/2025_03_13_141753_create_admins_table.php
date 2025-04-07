@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('phone');
-            $table->string('service');
+            $table->string('phone')->nullable();
+            $table->string('service')->nullable();
         });
     }
 
