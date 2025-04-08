@@ -15,22 +15,23 @@ class TeachersSeeder extends Seeder
     {
         $teachers = [
             ['Abderrahim', 'EL QADI', 'a.elqadi@um5r.ac.ma'],
-            ['Reda', 'Chefira', 'chefira.reda@gmail.com'],
-            ['Mohammed', 'Bekkali', 'bekkalimohammed@gmail.com'],
-            ['Mourad', 'El Yadari', 'm.elyadari@um5r.ac.ma'],
+            ['Reda', 'CHEFIRA', 'chefira.reda@gmail.com'],
+            ['Mohammed', 'BEKKALI', 'bekkalimohammed@gmail.com'],
+            ['Mourad', 'EL YADARI', 'm.elyadari@um5r.ac.ma'],
             ['Lahcen', 'AZRAR', 'l.azrar@um5r.ac.ma'],
             ['Mustapha', 'JOHRI', 'm.johri@um5r.ac.ma'],
             ['Soukaina', 'BEKKARI', 's.bekkari@um5r.ac.ma'],
-            ['Ayoub', 'Abdellaoui', 'ayoub.abdellaoui@gmail.com'],
-            ['Ilham', 'Sadoqi', 'ilhamsadoqi2@gmail.com'],
-            ['Khalid', 'Hacini', 'hacinikhalid@gmail.com'],
-            ['Maria', 'Zemzami', 'maria.zemzami@gmail.com'],
-            ['Saadia', 'Benzaghar', 's.benzaghar@um5r.ac.ma'],
-            ['Chafik', 'Nacir', 'c.nacir@um5r.ac.ma'],
-            ['Sophia', 'Alami Kamouri', 's.alami@um5r.ac.ma'],
-            ['Abdelkrim', 'Benfatima', 'a.benfatima@um5r.ac.ma'],
-            ['Saida', 'Tafraouti Idrissi', 's.tafraouti@um5r.ac.ma'],
-            ['Khaddouj', 'Karim', 'k.karim@um5r.ac.ma'],
+            ['Ayoub', 'ABDELLAOUI', 'ayoub.abdellaoui@gmail.com'],
+            ['Ilham', 'SADOQI', 'ilhamsadoqi2@gmail.com'],
+            ['Khalid', 'HACINI', 'hacinikhalid@gmail.com'],
+            ['Maria', 'ZEMZAMI', 'maria.zemzami@gmail.com'],
+            ['Saadia', 'BENZAGHAR', 's.benzaghar@um5r.ac.ma'],
+            ['Chafik', 'NACIR', 'c.nacir@um5r.ac.ma'],
+            ['Sophia', 'ALAMI KAMOURI', 's.alami@um5r.ac.ma'],
+            ['Abdelkrim', 'BENFATIMA', 'a.benfatima@um5r.ac.ma'],
+            ['Saida', 'TAFROAOUTI IDRISSI', 's.tafraouti@um5r.ac.ma'],
+            ['Khaddouj', 'KARIM', 'k.karim@um5r.ac.ma'],
+            ['Mohamed', 'ZERIAB ES-SADEK']
         ];
 
         foreach ($teachers as $teacher) {
