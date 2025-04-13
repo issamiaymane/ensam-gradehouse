@@ -45,7 +45,7 @@ class AdminsSeeder extends Seeder
             ]);
 
             // Display the details in the console for testing
-            $this->command->info("Admin added: {$email} | Password: {$randomPassword}");
+            $this->command->info("Admin added: Email: {$email} | Password: {$randomPassword}");
         }
     }
 }

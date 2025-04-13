@@ -31,7 +31,7 @@ class TeachersSeeder extends Seeder
             ['Abdelkrim', 'BENFATIMA', 'a.benfatima@um5r.ac.ma'],
             ['Saida', 'TAFROAOUTI IDRISSI', 's.tafraouti@um5r.ac.ma'],
             ['Khaddouj', 'KARIM', 'k.karim@um5r.ac.ma'],
-            ['Mohamed', 'ZERIAB ES-SADEK']
+            ['Mohamed', 'ZERIAB ES-SADEK', 'm.essadek@um5r.ac.ma'],
         ];
 
         foreach ($teachers as $teacher) {
@@ -51,7 +51,7 @@ class TeachersSeeder extends Seeder
             ]);
 
             // Affiche les identifiants dans la console pour test
-            $this->command->info("Professeur added: {$teacher[2]} | Password: $password");
+            $this->command->info("Professeur added: Email: {$teacher[2]} | Password: $password");
         }
     }
 }

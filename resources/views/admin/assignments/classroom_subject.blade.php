@@ -44,6 +44,7 @@
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 required
                             >
+                                <option value="" disabled selected>[Select]</option>
                                 @foreach($classroomSchoolYears as $classroomSchoolYear)
                                     <option value="{{ $classroomSchoolYear->id }}">
                                         {{ $classroomSchoolYear->classroom->name }} - {{ $classroomSchoolYear->school_year }}
@@ -60,6 +61,7 @@
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 required
                             >
+                                <option value="" disabled selected>[Select]</option>
                                 @foreach($subjects as $subject)
                                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                 @endforeach
@@ -74,8 +76,7 @@
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 required
                             >
-                                <option value="" disabled selected>Select Subject Code</option>
-                                <!-- Generate options dynamically -->
+                                <option value="" disabled selected>[Select]</option>
                                 <option value="M1">M1</option>
                                 <option value="M1.1">M1.1</option>
                                 <option value="M1.2">M1.2</option>
@@ -112,7 +113,7 @@
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 required
                             >
-                                <option value="" disabled selected>Select Semester</option>
+                                <option value="" disabled selected>[Select]</option>
                                 <option value="S1">S1</option>
                                 <option value="S2">S2</option>
                                 <option value="S3">S3</option>

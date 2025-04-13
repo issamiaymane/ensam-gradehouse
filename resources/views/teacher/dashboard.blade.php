@@ -65,7 +65,7 @@
                                                     <td class="px-5 py-4 sm:px-6">
                                                         <div class="flex items-center">
                                                             <a href="{{ route('teacher.subject.students', $assignment->classroomSubject->id) }}" class="text-gray-800 text-theme-sm dark:text-white/90 hover:text-brand-500">
-                                                                {{ $assignment->classroomSubject->subject_code }}
+                                                                {{ $assignment->classroomSubject->subject->subject_code }}
                                                             </a>
                                                         </div>
                                                     </td>

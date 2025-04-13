@@ -1,19 +1,17 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AssignmentController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\UserController;
-
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
-
+use App\Http\Controllers\Admin\SubjectTeacherAssignmentController;
+use App\Http\Controllers\TeacherController;
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
@@ -66,6 +64,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('admin/classrooms', [AcademicController::class, 'storeClassroom'])->name('classroom.store');
         Route::delete('admin/classrooms/{id}', [AcademicController::class, 'deleteClassroom'])->name('classroom.delete');
 
+    //Upload
+    Route::get('admin/upload/students', [UploadController::class, 'showUploadForm'])->name('admin.students.upload.form');
+    Route::post('admin/upload/students', [UploadController::class, 'uploadExcel'])->name('admin.students.upload');
+    Route::get('admin/assign/subject-teacher-assignments', [SubjectTeacherAssignmentController::class, 'index'])->name('admin.subjectTeacherAssignments.index');
+    Route::post('admin/assign/subject-teacher-assignments', [SubjectTeacherAssignmentController::class, 'store'])->name('admin.subjectTeacherAssignments.store');
+
+
 
 
     //Assignments
@@ -82,12 +87,7 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('admin/assignments/student', [AssignmentController::class, 'storeClassroomStudentAssignment'])->name('admin.storeClassroomStudent');
         Route::delete('admin/assignments/student/{id}', [AssignmentController::class, 'deleteClassroomStudentAssignment'])->name('admin.deleteClassroomStudent');
 
-     //Grades
-        Route::get('admin/grades/classrooms', [GradeController::class, 'index'])->name('admin.classrooms.index');
-        Route::get('admin/grades/classrooms/{classroom_school_year}/subjects', [GradeController::class, 'subjects'])->name('admin.classrooms.subjects');
-        Route::get('admin/grades/classrooms/{classroom_school_year}/subjects/{classroom_subject}/grades', [GradeController::class, 'grades'])->name('admin.classrooms.subjects.grades');
-        Route::put('admin/grades/classrooms/{classroom_school_year}/subjects/{classroom_subject}/approve', [GradeController::class, 'approveGrades'])->name('admin.classrooms.subjects.approve');
-        Route::put('admin/grades/classrooms/{classroom_school_year}/subjects/{classroom_subject}/reject', [GradeController::class, 'rejectGrades'])->name('admin.classrooms.subjects.reject');
+
 
     ///Settings
             // Link Classroom to School Year
@@ -102,6 +102,7 @@ Route::group(['middleware' => 'teacher'], function () {
     Route::get('teacher/subject/{classroomSubjectId}/grades', [TeacherController::class, 'subjectStudents'])->name('teacher.subject.students');
     Route::post('teacher/grades/save', [TeacherController::class, 'saveGrades'])->name('grades.save');
     Route::post('teacher/grades/submit', [TeacherController::class, 'submitGrades'])->name('grades.submit');
+    Route::post('/grades/grades/export', [TeacherController::class, 'exportGrades'])->name('grades.export');
 
     Route::get('teacher/calendar', function () {
         return view('teacher.calendar');

@@ -72,22 +72,31 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
                             <thead class="bg-gray-50 dark:bg-gray-900">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Name</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-700 dark:text-gray-400">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Classroom ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Subject Code</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Semester</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Created At</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Updated At</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-400">Actions</th>
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-gray-900">
                             @foreach($subjects as $subject)
                                 <tr>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->name }}</td>
-                                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-800 dark:text-white/90">
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->id }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->classroom_id }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->name }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->subject_code ?? '-' }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->semester ?? '-' }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->created_at }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">{{ $subject->updated_at }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-white/90">
                                         <div class="flex items-center gap-2">
-                                            <!-- Edit Button -->
                                             <a href="" class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
                                                 Edit
                                             </a>
-
-                                            <!-- Delete Button -->
                                             <form action="{{ route('subject.delete', $subject->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this subject?');">
                                                 @csrf
                                                 @method('DELETE')
@@ -99,9 +108,8 @@
                                     </td>
                                 </tr>
                             @endforeach
-
-
                             </tbody>
+
                         </table>
                     </div>
                 </div>

@@ -274,6 +274,89 @@
                             </a>
                         </li>
 
+                        <!-- Menu Item Upload CSV -->
+                        <li>
+                            <a
+                                href="#"
+                                @click.prevent="selected = (selected === 'Upload CSV' ? '':'Upload CSV')"
+                                class="menu-item group"
+                                :class="selected === 'Upload CSV' ? 'menu-item-active' : 'menu-item-inactive'"
+                            >
+                                <svg
+                                    :class="(selected === 'Upload CSV') ? 'menu-item-icon-active' : 'menu-item-icon-inactive'"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M7.41 8.29492L12 3.70492L16.59 8.29492L18 6.88492L12 0.884918L6 6.88492L7.41 8.29492Z"
+                                        fill=""
+                                    />
+                                    <path
+                                        d="M18 14.8849V10.8849H16V14.8849H6V10.8849H4V14.8849C4 16.9849 5.79 18.8849 8 18.8849H16C18.21 18.8849 20 16.9849 20 14.8849V10.8849H18V14.8849Z"
+                                        fill=""
+                                    />
+                                </svg>
+
+                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+            Global Upload and Assignments
+        </span>
+
+                                <svg
+                                    class="menu-item-arrow"
+                                    :class="[(selected === 'Upload CSV') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585"
+                                        stroke=""
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </a>
+
+                            <!-- Dropdown Menu Start -->
+                            <div
+                                class="overflow-hidden transform translate"
+                                :class="selected === 'Upload CSV' ? 'block' : 'hidden'"
+                            >
+                                <ul
+                                    :class="sidebarToggle ? 'lg:hidden' : 'flex'"
+                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9"
+                                >
+                                    <li>
+                                        <a
+                                            href="{{ url('admin/upload/students') }}"
+                                            class="menu-dropdown-item group"
+                                            :class="(page === 'Upload CSV' || '{{ Request::segment(3) }}' === 'students') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                        >
+                                            Upload Students
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ url('admin/assign/subject-teacher-assignments') }}"
+                                            class="menu-dropdown-item group"
+                                            :class="(page === 'Upload CSV' || '{{ Request::segment(3) }}' === 'subject-teacher-assignments') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
+                                        >
+                                            Assign Teachers with Subjects
+                                        </a>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                            <!-- Dropdown Menu End -->
+                        </li>
+
 
                         <!-- Menu Item Assignments -->
                         <li>
@@ -300,7 +383,7 @@
                                 </svg>
 
                                 <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-            Assignments
+            Single Upload and Assignments
         </span>
 
                                 <svg
@@ -364,83 +447,6 @@
                         </li>
 
                         <!-- Menu Item Grades -->
-                        <li>
-                            <a
-                                href="#"
-                                @click.prevent="selected = (selected === 'Grades' ? '':'Grades')"
-                                class="menu-item group"
-                                :class="selected === 'Grades' ? 'menu-item-active' : 'menu-item-inactive'"
-                            >
-                                <svg
-                                    :class="(selected === 'Tables') || (page === 'basicTables' || page === 'dataTables') ? 'menu-item-icon-active'  :'menu-item-icon-inactive'"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M3.25 5.5C3.25 4.25736 4.25736 3.25 5.5 3.25H18.5C19.7426 3.25 20.75 4.25736 20.75 5.5V18.5C20.75 19.7426 19.7426 20.75 18.5 20.75H5.5C4.25736 20.75 3.25 19.7426 3.25 18.5V5.5ZM5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5V8.58325L19.25 8.58325V5.5C19.25 5.08579 18.9142 4.75 18.5 4.75H5.5ZM19.25 10.0833H15.416V13.9165H19.25V10.0833ZM13.916 10.0833L10.083 10.0833V13.9165L13.916 13.9165V10.0833ZM8.58301 10.0833H4.75V13.9165H8.58301V10.0833ZM4.75 18.5V15.4165H8.58301V19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5ZM10.083 19.25V15.4165L13.916 15.4165V19.25H10.083ZM15.416 19.25V15.4165H19.25V18.5C19.25 18.9142 18.9142 19.25 18.5 19.25H15.416Z"
-                                        fill=""
-                                    />
-                                </svg>
-
-                                <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                Grades
-            </span>
-
-                                <svg
-                                    class="menu-item-arrow"
-                                    :class="[(selected === 'Grades') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 20 20"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585"
-                                        stroke=""
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </a>
-
-                            <!-- Dropdown Menu Start -->
-                            <div
-                                class="overflow-hidden transform translate"
-                                :class="selected === 'Grades' ? 'block' :'hidden'"
-                            >
-                                <ul
-                                    :class="sidebarToggle ? 'lg:hidden' : 'flex'"
-                                    class="flex flex-col gap-1 mt-2 menu-dropdown pl-9"
-                                >
-                                    <li>
-                                        <a
-                                            href="{{url('admin/grades/classrooms')}}"
-                                            class="menu-dropdown-item group"
-                                            :class="(page === 'Grades' || '{{ Request::segment(2) }}' === 'grades') ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
-                                        >
-                                            View Grades
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="menu-dropdown-item group"
-                                            :class="page === 'submitGrades' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'"
-                                        >
-                                            Submit Grades
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- Dropdown Menu End -->
-                        </li>
                     </ul>
                 </div>
                 <!-- Others Group -->

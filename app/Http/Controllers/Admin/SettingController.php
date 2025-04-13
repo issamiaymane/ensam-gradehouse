@@ -9,30 +9,61 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    // Link Classroom to School Year
-    public function linkClassroomToSchoolYear() {
-        $classrooms = Classroom::all();
-        $classroomSchoolYears = ClassroomSchoolYear::with('classroom')->get();
-        return view('admin.classrooms.classroom_school_year', compact('classrooms', 'classroomSchoolYears'));
+    public function linkClassroomToSchoolYear()
+    {
+        $classroomSchoolYears = ClassroomSchoolYear::with('classroom')
+            ->orderBy('school_year', 'desc')
+            ->orderBy('classroom_id')
+            ->get();
+
+        return view('admin.settings.classroom_school_year', compact('classroomSchoolYears'));
     }
 
-    public function storeClassroomSchoolYear(Request $request) {
+    public function storeClassroomSchoolYear(Request $request)
+    {
         $request->validate([
-            'classroom_id' => 'required|exists:classrooms,id',
             'school_year' => 'required|string',
         ]);
 
-        ClassroomSchoolYear::create([
-            'classroom_id' => $request->classroom_id,
-            'school_year' => $request->school_year,
-        ]);
+        // Get all active classrooms
+        $classrooms = Classroom::all();
 
-        return redirect()->route('admin.linkClassroomToSchoolYear')->with('success', 'Classroom linked to school year successfully.');
+        // Counter for successful assignments
+        $assignedCount = 0;
+
+        foreach ($classrooms as $classroom) {
+            // Check if assignment already exists
+            if (!ClassroomSchoolYear::where('classroom_id', $classroom->id)
+                ->where('school_year', $request->school_year)
+                ->exists()) {
+
+                ClassroomSchoolYear::create([
+                    'classroom_id' => $classroom->id,
+                    'school_year' => $request->school_year,
+                ]);
+
+                $assignedCount++;
+            }
+        }
+
+        if ($assignedCount > 0) {
+            return redirect()->route('admin.linkClassroomToSchoolYear')
+                ->with('success', "{$request->school_year} school year has been assigned to {$assignedCount} classrooms.");
+        }
+
+        return redirect()->route('admin.linkClassroomToSchoolYear')
+            ->with('info', "All classrooms already have {$request->school_year} school year assigned.");
     }
 
-    public function deleteClassroomSchoolYear($id) {
-        ClassroomSchoolYear::findOrFail($id)->delete();
-        return redirect()->route('admin.linkClassroomToSchoolYear')->with('success', 'Link deleted successfully.');
-    }
+    public function deleteClassroomSchoolYear($id)
+    {
+        $assignment = ClassroomSchoolYear::findOrFail($id);
+        $schoolYear = $assignment->school_year;
+        $classroomName = $assignment->classroom->name;
 
+        $assignment->delete();
+
+        return redirect()->route('admin.linkClassroomToSchoolYear')
+            ->with('success', "School year {$schoolYear} has been removed from {$classroomName}.");
+    }
 }

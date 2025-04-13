@@ -58,10 +58,26 @@ class AssignmentController extends Controller
     // Teacher
     public function assignTeacherToSubject() {
         $teachers = Teacher::with('user')->whereHas('user')->get();
-        $classroomSubjects = ClassroomSubject::with(['classroomSchoolYear.classroom', 'subject'])->get();
-        $teacherSubjectAssignments = TeacherSubjectAssignment::with(['teacher.user', 'classroomSubject.classroomSchoolYear.classroom', 'classroomSubject.subject'])->get();
 
-        return view('admin.assignments.teacher_subject_assignment', compact('teachers', 'classroomSubjects', 'teacherSubjectAssignments'));
+        // Get IDs of already assigned classroom subjects
+        $assignedSubjectIds = TeacherSubjectAssignment::pluck('classroom_subject_id')->toArray();
+
+        // Get only unassigned classroom subjects
+        $classroomSubjects = ClassroomSubject::with(['classroomSchoolYear.classroom', 'subject'])
+            ->whereNotIn('id', $assignedSubjectIds)
+            ->get();
+
+        $teacherSubjectAssignments = TeacherSubjectAssignment::with([
+            'teacher.user',
+            'classroomSubject.classroomSchoolYear.classroom',
+            'classroomSubject.subject'
+        ])->get();
+
+        return view('admin.assignments.teacher_subject_assignment', compact(
+            'teachers',
+            'classroomSubjects',
+            'teacherSubjectAssignments'
+        ));
     }
 
     public function storeTeacherSubjectAssignment(Request $request) {
@@ -70,12 +86,22 @@ class AssignmentController extends Controller
             'classroom_subject_id' => 'required|exists:classroom_subject,id',
         ]);
 
+        // Check if assignment already exists
+        $existingAssignment = TeacherSubjectAssignment::where('classroom_subject_id', $request->classroom_subject_id)
+            ->first();
+
+        if ($existingAssignment) {
+            return redirect()->route('admin.assignTeacherToSubject')
+                ->with('error', 'This subject is already assigned to a teacher.');
+        }
+
         TeacherSubjectAssignment::create([
             'teacher_id' => $request->teacher_id,
             'classroom_subject_id' => $request->classroom_subject_id,
         ]);
 
-        return redirect()->route('admin.assignTeacherToSubject')->with('success', 'Teacher assigned to subject successfully.');
+        return redirect()->route('admin.assignTeacherToSubject')
+            ->with('success', 'Teacher assigned to subject successfully.');
     }
 
     public function deleteTeacherSubjectAssignment($id) {

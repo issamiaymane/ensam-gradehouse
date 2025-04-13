@@ -187,12 +187,6 @@
                                 <span x-text="selectedSubject?.teacherSubjectAssignments[0]?.teacher?.user?.last_name"></span>
                             </p>
                         </div>
-                        <div>
-                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                First Grade:
-                            </label>
-                            <p class="text-sm font-medium text-gray-800 dark:text-white/90" x-text="selectedSubject?.grades[0]?.grade || 'N/A'"></p>
-                        </div>
                     </div>
                 </div>
             </div>

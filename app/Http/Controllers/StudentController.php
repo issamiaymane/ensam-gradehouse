@@ -51,7 +51,7 @@ class StudentController extends Controller
         $subjects = ClassroomSubject::where('classroom_school_year_id', $classroomSchoolYearId)
             ->with(['subject', 'teacherSubjectAssignments.teacher.user', 'grades' => function ($query) use ($student) {
                 $query->where('student_id', $student->id)
-                    ->where('status', 'approved'); // Only fetch approved grades
+                    ->where('status', 'sent'); // Only fetch sent grades
             }])
             ->get();
 

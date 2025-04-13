@@ -14,9 +14,14 @@ return new class extends Migration
         // database/migrations/xxxx_xx_xx_create_subjects_table.php
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('classroom_id')->constrained()->onDelete('cascade');
+            $table->string('subject_code')->nullable();
+            $table->string('name');
+            $table->string('semester')->nullable();
+            $table->unique(['classroom_id', 'name']);
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 

@@ -8,6 +8,7 @@ use App\Models\Grade;
 use App\Models\TeacherSubjectAssignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class TeacherController extends Controller
 {
@@ -71,8 +72,8 @@ class TeacherController extends Controller
                 ->where('teacher_subject_assignment_id', $classroomSubjectId)
                 ->first();
 
-            if ($existingGrade && in_array($existingGrade->status, ['submitted', 'approved', 'rejected'])) {
-                return redirect()->back()->with('error', 'Cannot save. Already sent for approval or rejected.');
+            if ($existingGrade && in_array($existingGrade->status, ['sent'])) {
+                return redirect()->back()->with('error', 'Cannot save, grades already sent to students. Please contact the administrator.');
             }
 
             Grade::updateOrCreate(
@@ -87,7 +88,7 @@ class TeacherController extends Controller
             );
         }
 
-        return redirect()->back()->with('success', 'Grades saved successfully!');
+        return redirect()->back()->with('warning', 'Grades saved successfully!');
     }
 
     public function submitGrades(Request $request)
@@ -109,8 +110,8 @@ class TeacherController extends Controller
                 ->where('teacher_subject_assignment_id', $classroomSubjectId)
                 ->first();
 
-            if ($existingGrade && in_array($existingGrade->status, ['submitted', 'approved', 'rejected'])) {
-                return redirect()->back()->with('error', 'Cannot submit. Already sent for approval or rejected.');
+            if ($existingGrade && in_array($existingGrade->status, ['submitted', 'sent'])) {
+                return redirect()->back()->with('error', 'Cannot submit, grades already sent to students. Please contact the administrator.');
             }
 
             Grade::updateOrCreate(
@@ -120,11 +121,70 @@ class TeacherController extends Controller
                 ],
                 [
                     'grade' => $grade,
-                    'status' => 'submitted',
+                    'status' => 'sent',
                 ]
             );
         }
 
         return redirect()->back()->with('success', 'Grades submitted successfully!');
     }
+
+    public function exportGrades(Request $request)
+    {
+        // Get the uploaded file
+        $file = $request->file('grades_excel');
+
+        // Load the Excel file
+        $spreadsheet = IOFactory::load($file->getPathname());
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Get the classroom subject ID
+        $classroomSubjectId = $request->input('classroom_subject_id');
+
+        // Start reading from row 18 (as per your instructions)
+        $row = 18;
+
+        // Loop through the rows until there are no more apogees in column A
+        while ($sheet->getCell('A' . $row)->getValue()) {
+            // Get the apogee from column A
+            $apogee = $sheet->getCell('A' . $row)->getValue();
+
+            // Look up the student by apogee
+            $student = \App\Models\Student::where('apogee', $apogee)->first();
+
+            if ($student) {
+                // Fetch the grade for this student and teacher's subject assignment
+                $grade = \App\Models\Grade::where('student_id', $student->id)
+                    ->where('teacher_subject_assignment_id', $classroomSubjectId)
+                    ->first();
+
+                if ($grade) {
+                    // Set the grade in column E (grade column)
+                    $sheet->setCellValue('E' . $row, $grade->grade);
+                } else {
+                    // If no grade, set a blank or a message (e.g., "No grade")
+                    $sheet->setCellValue('E' . $row, 'No grade');
+                }
+            } else {
+                // If student not found, set a message in the grade column
+                $sheet->setCellValue('E' . $row, 'Student not found');
+            }
+
+            $row++; // Move to the next row
+        }
+
+        // Get the original file name
+        $originalFileName = $file->getClientOriginalName();
+
+        // Define the path where the file will be saved (use the same name as the uploaded file)
+        $tempFilePath = storage_path('app/public/' . $originalFileName);
+
+        // Save the modified spreadsheet to the temporary file
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save($tempFilePath);
+
+        // Return the file for download with the original name
+        return response()->download($tempFilePath)->deleteFileAfterSend(true);
+    }
+
 }
