@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div x-data="{ isSubjectDetailsModal: false, selectedSubject: null }">
+    <div x-data="{ isSubjectDetailsModal: false, selectedSubject: null, showDebug: false }">
         <main>
             <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
                 <div class="space-y-5 sm:space-y-6">
@@ -117,7 +117,11 @@
                                                     <td class="px-5 py-4 sm:px-6">
                                                         <div class="flex items-center">
                                                             <button
-                                                                @click="isSubjectDetailsModal = true; selectedSubject = {{ json_encode($subject) }}"
+                                                                @click="isSubjectDetailsModal = true; selectedSubject = {{ json_encode([
+                                                                    'subject' => $subject->subject,
+                                                                    'teacher' => optional($subject->teacherSubjectAssignments->first())->teacher,
+                                                                    'grades' => $subject->grades
+                                                                ]) }}"
                                                                 class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                                                             >
                                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -138,8 +142,8 @@
                             <div class="flex justify-end mt-6">
                                 <p class="p-1 text-xs font-semibold text-gray-800 dark:text-white/90">
                                     ***If N/A is displayed next to a grade in your CC results, it means that
-                                    the grade for that item is not yet available because the administration
-                                    has not yet submitted the grade.
+                                    the grade for that item is not yet available because the teacher
+                                    has not yet sent the grade.
                                 </p>
                             </div>
                         </div>
@@ -183,8 +187,15 @@
                                 Teacher:
                             </label>
                             <p class="text-sm font-medium text-gray-800 dark:text-white/90">
-                                <span x-text="selectedSubject?.teacherSubjectAssignments[0]?.teacher?.user?.first_name"></span>
-                                <span x-text="selectedSubject?.teacherSubjectAssignments[0]?.teacher?.user?.last_name"></span>
+                                <template x-if="selectedSubject?.teacher">
+                                    <span>
+                                        <span x-text="selectedSubject.teacher.user.first_name"></span>
+                                        <span x-text="' ' + selectedSubject.teacher.user.last_name"></span>
+                                    </span>
+                                </template>
+                                <template x-if="!selectedSubject?.teacher">
+                                    <span>No teacher assigned</span>
+                                </template>
                             </p>
                         </div>
                     </div>

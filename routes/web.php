@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\Admin\SubjectTeacherAssignmentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
@@ -64,16 +63,16 @@ Route::group(['middleware' => 'admin'], function () {
         Route::post('admin/classrooms', [AcademicController::class, 'storeClassroom'])->name('classroom.store');
         Route::delete('admin/classrooms/{id}', [AcademicController::class, 'deleteClassroom'])->name('classroom.delete');
 
-    //Upload
-    Route::get('admin/upload/students', [UploadController::class, 'showUploadForm'])->name('admin.students.upload.form');
-    Route::post('admin/upload/students', [UploadController::class, 'uploadExcel'])->name('admin.students.upload');
-    Route::get('admin/assign/subject-teacher-assignments', [SubjectTeacherAssignmentController::class, 'index'])->name('admin.subjectTeacherAssignments.index');
-    Route::post('admin/assign/subject-teacher-assignments', [SubjectTeacherAssignmentController::class, 'store'])->name('admin.subjectTeacherAssignments.store');
+    //Global Upload and Assignments
+        //Upload Students
+        Route::get('admin/upload/students', [UploadController::class, 'showStudentUploadForm'])->name('admin.students.upload.form');
+        Route::post('admin/upload/students', [UploadController::class, 'storeStudentUploadForm'])->name('admin.students.upload');
+        //Assign Teachers with Subjects
+        Route::get('admin/assign/subject-teacher-assignments', [UploadController::class, 'showTeacherAssignmentForm'])->name('admin.subjectTeacherAssignments.index');
+        Route::post('admin/assign/subject-teacher-assignments', [UploadController::class, 'storeTeacherAssignmentForm'])->name('admin.subjectTeacherAssignments.store');
 
 
-
-
-    //Assignments
+    //Single Upload and Assignments
         // Assign Subjects to Classroom
         Route::get('admin/assignments/subject', [AssignmentController::class, 'assignSubjectToClassroom'])->name('admin.assignSubjectToClassroom');
         Route::post('admin/assignments/subject', [AssignmentController::class, 'storeSubjectClassroom'])->name('admin.storeSubjectClassroom');

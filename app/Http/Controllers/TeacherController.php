@@ -68,24 +68,42 @@ class TeacherController extends Controller
             $studentId = $studentData['student_id'];
             $grade = $studentData['grade'];
 
+            // Handle empty grade (consider it as null)
+            if ($grade === '' || $grade === null) {
+                $grade = null;
+            } else {
+                // Validate decimal separator
+                if (is_string($grade) && strpos($grade, ',') !== false) {
+                    return redirect()->back()->with('error', 'Please use dot (.) as decimal separator instead of comma (,). Example: 12.5 instead of 12,5');
+                } else {
+                    // Convert to float if it's a valid number
+                    $grade = is_numeric($grade) ? (float)$grade : null;
+
+                    // Validate grade range (-1 to 20, where -1 means absent)
+                    if ($grade !== null && ($grade < -1 || $grade > 20)) {
+                        return redirect()->back()->with('error', 'Grades must be between -1 (absent) and 20.');
+                    }
+                }
+            }
+
             $existingGrade = Grade::where('student_id', $studentId)
                 ->where('teacher_subject_assignment_id', $classroomSubjectId)
                 ->first();
 
             if ($existingGrade && in_array($existingGrade->status, ['sent'])) {
                 return redirect()->back()->with('error', 'Cannot save, grades already sent to students. Please contact the administrator.');
+            } else {
+                Grade::updateOrCreate(
+                    [
+                        'student_id' => $studentId,
+                        'teacher_subject_assignment_id' => $classroomSubjectId,
+                    ],
+                    [
+                        'grade' => $grade,
+                        'status' => 'draft',
+                    ]
+                );
             }
-
-            Grade::updateOrCreate(
-                [
-                    'student_id' => $studentId,
-                    'teacher_subject_assignment_id' => $classroomSubjectId,
-                ],
-                [
-                    'grade' => $grade,
-                    'status' => 'draft',
-                ]
-            );
         }
 
         return redirect()->back()->with('warning', 'Grades saved successfully!');
@@ -97,14 +115,31 @@ class TeacherController extends Controller
         $students = $request->input('students');
 
         foreach ($students as $studentData) {
-            if (empty($studentData['grade'])) {
-                return redirect()->back()->with('error', 'All grades must be entered before submitting.');
+            $grade = $studentData['grade'] ?? null;
+
+            // Check if grade is empty (null or empty string)
+            if ($grade === '' || $grade === null) {
+                return redirect()->back()->with('error', 'All grades must be entered before submitting. Use -1 for absent students.');
+            } else {
+                // Validate decimal separator
+                if (is_string($grade) && strpos($grade, ',') !== false) {
+                    return redirect()->back()->with('error', 'Please use dot (.) as decimal separator instead of comma (,). Example: 12.5 instead of 12,5');
+                } else {
+                    // Convert to float if it's a valid number
+                    $grade = is_numeric($grade) ? (float)$grade : null;
+
+                    // Validate grade range (-1 to 20)
+                    if ($grade === null || $grade < -1 || $grade > 20) {
+                        return redirect()->back()->with('error', 'Grades must be between -1 (absent) and 20.');
+                    }
+                }
             }
         }
 
         foreach ($students as $studentData) {
             $studentId = $studentData['student_id'];
             $grade = $studentData['grade'];
+            $grade = is_numeric($grade) ? (float)$grade : null;
 
             $existingGrade = Grade::where('student_id', $studentId)
                 ->where('teacher_subject_assignment_id', $classroomSubjectId)
@@ -112,18 +147,18 @@ class TeacherController extends Controller
 
             if ($existingGrade && in_array($existingGrade->status, ['submitted', 'sent'])) {
                 return redirect()->back()->with('error', 'Cannot submit, grades already sent to students. Please contact the administrator.');
+            } else {
+                Grade::updateOrCreate(
+                    [
+                        'student_id' => $studentId,
+                        'teacher_subject_assignment_id' => $classroomSubjectId, // Fixed this line
+                    ],
+                    [
+                        'grade' => $grade,
+                        'status' => 'sent',
+                    ]
+                );
             }
-
-            Grade::updateOrCreate(
-                [
-                    'student_id' => $studentId,
-                    'teacher_subject_assignment_id' => $classroomSubjectId,
-                ],
-                [
-                    'grade' => $grade,
-                    'status' => 'sent',
-                ]
-            );
         }
 
         return redirect()->back()->with('success', 'Grades submitted successfully!');

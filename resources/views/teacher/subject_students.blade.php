@@ -55,7 +55,7 @@
                                                     <tr>
                                                         <td class="px-5 py-4 sm:px-6">
                                                             <p class="text-gray-800 text-theme-sm dark:text-white/90">
-                                                                {{ $student->student->user->first_name }} {{ $student->student->user->last_name }}
+                                                                {{ $student->student->user->last_name }} {{ $student->student->user->first_name }}
                                                             </p>
                                                             <input type="hidden" name="students[{{ $loop->index }}][student_id]" value="{{ $student->student_id }}">
                                                         </td>
