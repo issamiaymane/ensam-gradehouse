@@ -1,120 +1,135 @@
-# ENSAM GradeHouse 🎓📊
+# Overview
+**ENSAM GradeHouse** is a Laravel-based web application designed to streamline continuous assessment grade management at **École Nationale Supérieure d'Arts et Métiers de Rabat (ENSAM Rabat)**. The platform provides instructors with tools to input grades and students with real-time access to their academic progress.
 
-**ENSAM GradeHouse** is a Laravel-based web application developed to streamline the management and visualization of continuous assessment grades at **École Nationale Supérieure d'Arts et Métiers de Rabat (ENSAM Rabat)**.
-
-It provides an intuitive platform for instructors to input grades and for students to monitor their academic progress throughout the semester.
-
----
-
-## 🚀 Features
-
-- 👩‍🏫 Instructor dashboard for managing and entering grades
-- 🎓 Secure student portal for grade consultation
-- 📄 CSV import/export support for bulk grade handling
-- 🔒 Role-based access control (Admin, Teacher, Student)
-- 📈 Real-time statistics and grade visualization
-- 📬 Email alerts upon grade publication
+### Screenshots
+![home](public/screenshots/home.png)
+![auth](public/screenshots/auth.png)
 
 ---
 
-## 🧱 Tech Stack
+## 🚀 Key Features
 
-- **Framework:** Laravel 10 (Breeze + Blade + Alpine.js)
-- **Language:** PHP 8.2
+### For Instructors
+- Grade management dashboard
+- Bulk import/export via CSV
+- Grade analytics and statistics
+- Automated email notifications
+
+### For Students
+- Personalized grade portal
+- Progress visualization
+- Instant grade publication alerts
+
+### System Features
+- Role-based access control (Admin/Teacher/Student)
+- Comprehensive admin panel
+- Data export capabilities
+
+---
+
+## 🧱 Technology Stack
+
+### Backend
+- **Framework:** Laravel 10
+- **PHP Version:** 8.2+
 - **Database:** MySQL
-- **Frontend:** TailwindCSS, Alpine.js
 - **Authentication:** Laravel Breeze
 - **Testing:** PestPHP
 
+### Frontend
+- **Styling:** TailwindCSS
+- **Interactivity:** Alpine.js
+- **Templating:** Blade
+
 ---
 
-## ⚙️ Getting Started
+## 🛠️ Installation Guide
 
-### 1. Clone the Repository
+### Prerequisites
+- PHP 8.2+
+- Composer
+- Node.js
+- MySQL
 
-\`\`\`bash
+### Setup Instructions
+
+1. **Clone the repository**
+```shell
 git clone https://github.com/issamiaymane/ensam-gradehouse.git
 cd ensam-gradehouse
-\`\`\`
-
-### 2. Install Dependencies
-
-\`\`\`bash
+```
+2. **Install dependencies**
+```shell
 composer install
-npm install && npm run dev
-\`\`\`
-
-### 3. Set Up Environment
-
-\`\`\`bash
+npm install
+```
+3. **Configure environment**
+```shell
 cp .env.example .env
 php artisan key:generate
-\`\`\`
-
-### 4. Configure Database
-
-Update your `.env` file with your MySQL database credentials.
-
-### 5. Run Migrations & Seeders
-
-\`\`\`bash
+```
+4. **Database setup**
+Update .env with your database credentials
+Run migrations:
+```shell
 php artisan migrate --seed
-\`\`\`
-
-### 6. Start the Server
-
-\`\`\`bash
+```
+5. **Start the development server**
+```shell
 php artisan serve
-\`\`\`
+```
+###🖥️ Production Deployment (Apache)
+Move project to web directory:
 
+```shell
+sudo mv /path/to/laravel /var/www/laravel
+sudo chown -R www-data:www-data /var/www/laravel
+sudo chmod -R 755 /var/www/laravel
+```
+
+Create Apache configuration (/etc/apache2/sites-available/laravel.conf):
+```shell
+apache
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/laravel/public
+    ServerName your_domain_or_IP
+
+    <Directory /var/www/laravel/public>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/laravel_error.log
+    CustomLog ${APACHE_LOG_DIR}/laravel_access.log combined
+</VirtualHost>
+```
+Enable the site:
+```shell
+sudo a2ensite laravel.conf
+sudo a2enmod rewrite
+sudo a2dissite 000-default.conf
+sudo systemctl reload apache2
+```
 ---
-
-## 👥 User Roles
-
-| Role     | Description                        |
-|----------|------------------------------------|
-| \`admin\`  | Manages users and platform settings |
-| \`teacher\`| Adds, edits, and manages grades     |
-| \`student\`| Views personal grades and history   |
-
----
-
-## 🧪 Running Tests
-
-\`\`\`bash
-php artisan test
-# or
-./vendor/bin/pest
-\`\`\`
-
----
-
-## 📂 Key Folder Structure
-
-- \`app/Models/Student.php\` – Student model with relationships
-- \`app/Http/Controllers/GradeController.php\` – Grade logic and operations
-- \`resources/views/\` – Blade templates for frontend views
-- \`database/seeders/StudentsSeeder.php\` – Initial student data seeder
-
----
-
-## 📌 Roadmap
-
-- ✅ Export grades to PDF
-- ⏳ Dashboard with detailed grade statistics
-- ⏳ Notifications for upcoming assessments
-- ⏳ Dark mode support 🌙
-
----
-
 ## 👨‍💻 Contributor
-
-- **Aymane ISSAMI** – [@issamiaymane](https://github.com/issamiaymane)
+[Aymane ISSAMI](https://github.com/issamiaymane)
 
 ---
 
-## 📄 License
+## 📜 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is protected under a custom license.  
+You are **not permitted** to:
 
-> Built with ❤️ for ENSAM Rabat.
+- Copy or redistribute any part of this code
+- Modify or create derivative works
+- Use this project in commercial or non-commercial applications
+
+**Usage, modification, or redistribution of this project requires prior written consent from the author.**
+
+---
+
+Built with ❤️ for ENSAM Rabat
+---

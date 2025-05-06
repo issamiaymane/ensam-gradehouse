@@ -68,10 +68,10 @@
             <!-- Hamburger Toggle BTN -->
 
             <a href="{{url('sign-in')}}" class="lg:hidden">
-                <img class="dark:hidden" src="{{url('../images/logo/logo.png')}}" alt="Logo" />
+                <img class="dark:hidden" src="{{url('../images/logo/logo-light.svg')}}" alt="Logo" />
                 <img
                         class="hidden dark:block"
-                        src="{{url('../images/logo/logo-dark.png')}}"
+                        src="{{url('../images/logo/logo-dark.svg')}}"
                         alt="Logo"
                 />
             </a>

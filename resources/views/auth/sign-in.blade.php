@@ -229,7 +229,8 @@
 
                 <div class="flex flex-col items-center max-w-xs">
                     <a href="{{url('/')}}" class="block mb-4">
-                        <img src="images/logo/auth-logo.png" alt="Logo" />
+                        <img class="dark:hidden" src="images/logo/logo-light.svg" alt="Logo" />
+                        <img class="hidden dark:block" src="images/logo/logo-dark.svg" alt="Logo" />
                     </a>
                     <p class="text-center text-gray-400 dark:text-white/60">
                         Empowering education through efficient grade management, where every student's success is our priority.

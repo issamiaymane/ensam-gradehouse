@@ -24,7 +24,7 @@
                             <div class="flex flex-col md:flex-row items-center md:justify-between space-y-8 md:space-y-0 md:space-x-12">
                                 <!-- Apogee School Logo -->
                                 <div class="flex-shrink-0">
-                                    <img src="{{ url('../images/logo/ensam-logo.png') }}" alt="Apogee School Logo" class="w-48 h-auto rounded-lg shadow-lg">
+                                    <img src="{{ url('../images/logo/ensam-logo.svg') }}" alt="Apogee School Logo" class="w-48 h-auto rounded-lg shadow-lg">
                                 </div>
 
                                 <!-- Student Name and Welcome Text -->

@@ -9,10 +9,10 @@
     >
         <a href="{{url('sign-in')}}">
       <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
-        <img class="dark:hidden" src="{{ asset('../images/logo/logo.png') }}" alt="Logo"/>
+        <img class="dark:hidden" src="{{ asset('../images/logo/logo-light.svg') }}" alt="Logo"/>
         <img
                 class="hidden dark:block"
-                src="{{ asset('../images/logo/logo-dark.png') }}"
+                src="{{ asset('../images/logo/logo-dark.svg') }}"
                 alt="Logo"
         />
       </span>
@@ -20,7 +20,7 @@
             <img
                     class="logo-icon"
                     :class="sidebarToggle ? 'lg:block' : 'hidden'"
-                    src="{{url('../images/logo/logo-icon.png')}}"
+                    src="{{url('../images/logo/icon-light.svg')}}"
                     alt="Logo"
             />
         </a>

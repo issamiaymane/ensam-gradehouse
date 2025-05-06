@@ -25,7 +25,7 @@
                         <div class="flex flex-col md:flex-row items-center md:justify-between space-y-8 md:space-y-0 md:space-x-12">
                             <!-- Image -->
                             <div class="flex-shrink-0">
-                                <img src="{{url('../images/logo/ensam-logo.png')}}" alt="School Image" class="w-48 h-auto rounded-lg shadow-lg">
+                                <img src="{{url('../images/logo/ensam-logo.svg')}}" alt="School Image" class="w-48 h-auto rounded-lg shadow-lg">
                             </div>
 
                             <!-- Text -->

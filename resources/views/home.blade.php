@@ -11,9 +11,327 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link href="{{ asset('style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --ensam-accent: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            background-color: #f8f9fa;
+        }
+
+        .dark body {
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+
+        /* Header Styles */
+        .topbar {
+            background-color: var(--color-brand-500);
+            color: white;
+            padding: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .dark .topbar {
+            background-color: var(--color-brand-500);
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .dark .navbar {
+            background-color: #1f2937;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--color-brand-500);
+        }
+
+        .dark .navbar-brand {
+            color: var(--color-brand-500);
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+        }
+
+        .dark .nav-link {
+            color: #f3f4f6;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--color-brand-500);
+        }
+
+        .btn-ensam {
+            background-color: var(--color-brand-500);
+            color: white;
+            border-radius: var(--radius-lg);
+        }
+
+        .btn-ensam:hover {
+            background-color: var(--color-brand-600);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: url('{{ asset('images/shape/grid-01.svg') }}') no-repeat;
+            background-size: cover;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark .hero-section {
+            color : white;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+        }
+
+        .hero-section .d-flex {
+            position: relative;
+            z-index: 20;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .dark .features-section {
+            background-color: #1f2937;
+            color : white;
+        }
+
+        .section-title {
+            color: var(--color-brand-500);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .dark .section-title {
+            color: var(--color-brand-500);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--ensam-accent);
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+            border-top: 3px solid var(--color-brand-500);
+        }
+
+        .dark .feature-card {
+            background-color: #374151;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--color-brand-500);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: var(--color-brand-950);
+            margin-bottom: 1rem;
+        }
+
+        .dark .feature-title {
+            color: #f3f4f6;
+        }
+
+        /* Announcement Section */
+        .announcements-section {
+            padding: 5rem 0;
+        }
+
+        .announcement-slider {
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .announcement-slider img {
+            width: 100%;
+            height: 720px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .dark .announcement-slider .slide-info {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .slide-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 2rem;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        .slide-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .slide-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .slider-nav:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .slider-prev {
+            left: 20px;
+        }
+
+        .slider-next {
+            right: 20px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background-color: var(--color-brand-500);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-brand-600);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .dark .footer {
+            background-color: #1f2937;
+        }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            display: block;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
+
 <div
-    x-data="{ page: 'comingSoon', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'home', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -29,61 +347,227 @@
             <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-brand-500 border-t-transparent"></div>
             <p class="mt-4 text-gray-600 dark:text-gray-300">Loading GradeHouse...</p>
         </div>
-
     </div>
     <!-- ===== Preloader End ===== -->
-    <div class="relative p-6 bg-white z-1 dark:bg-gray-900 sm:p-0"
-        <nav class="fixed w-full bg-white dark:bg-gray-900/90 backdrop-blur-md z-50 shadow-sm">
-            <div class="container mx-auto px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <a href="#" class="flex items-center">
-                        <img src="{{url('images/logo/favicon.png')}}" alt="ENSAM Logo" class="h-12 w-auto">
-                        <span class="ml-3 text-xl font-bold text-gray-800 dark:text-white">GradeHouse</span>
-                    </a>
 
-                    <div class="flex items-center space-x-6">
-                        <a href="{{url('sign-in')}}" class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2 rounded-lg transition-all duration-300">
-                            Sign In <i class="ml-2 fas fa-arrow-right"></i>
+    <!-- Topbar Start -->
+    <div class="topbar d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <i class="fas fa-university me-2"></i> High National School Of Arts and Crafts Rabat
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-calendar-alt me-2"></i> Academic Year 2024-2025
+                </div>
+                <div class="col-md-4 text-end">
+                    <i class="fas fa-clock me-2"></i> Last Update: <span id="current-date"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand flex items-center" href="#">
+                <img class="dark:hidden" src="{{ url('images/logo/logo-light.svg') }}" alt="ENSAM Logo" class="h-8 w-auto me-2">
+                <img class="hidden dark:block" src="{{ url('images/logo/logo-dark.svg') }}" alt="ENSAM Logo" class="h-8 w-auto me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('sign-in')}}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('sign-in')}}">Grades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('sign-in')}}">Calendar</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            Resources
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">FAQs</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <a href="{{url('sign-in')}}" class="btn btn-ensam ms-3">
+                    Sign In <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Hero Section Start -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Monitor Your Academic Progress</h1>
+                    <p class="hero-subtitle">ENSAM GradeHouse provides real-time access to your Continuous Control grades and academic performance analytics.</p>
+                    <div class="d-flex gap-3">
+                        <a href="{{url('sign-in')}}" class="btn btn-ensam btn-lg">Sign In <i class="fas fa-arrow-right ms-2"></i></a>
+                        <a href="#" class="btn btn-ensam btn-lg">Learn More</a>
+                    </div>
+                    <div class="mt-4 p-3 bg-white bg-opacity-10 rounded d-inline-block">
+                        <small><i class="fas fa-info-circle me-2"></i> Grades become final only after deliberation</small>
                     </div>
                 </div>
             </div>
-        </nav>
-    </div>
-    <!-- ===== Page Wrapper Start ===== -->
-    <div
-        class="relative z-1 flex min-h-screen flex-col items-center justify-center overflow-hidden p-6"
-    >
-        <!-- Main -->
-        <div class="mx-auto w-full max-w-[242px] text-center sm:max-w-[472px]">
-            <h1
-                class="mb-8 text-title-md font-bold text-gray-800 dark:text-white/90 xl:text-title-2xl"
-            >
-                ENSAM GradeHouse
-            </h1>
-
-            <p class="mb-6 Welcome On Board!mt-10 text-base text-gray-700 dark:text-gray-400 sm:text-lg">
-                Welcome to our platform! We're excited to have you on board. Explore the various features, connect with others, and enjoy the experience.
-            </p>
-
         </div>
+    </section>
+    <!-- Hero Section End -->
 
-        <!-- Footer -->
-        <p
-            class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center text-sm text-gray-500 dark:text-gray-400"
-        >
-            &copy; <span id="year"></span> - ENSAM GradeHouse. All Rights Reserved.
-        </p>
+    <!-- Features Section Start -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="text-center section-title">GradeHouse Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Grade Analytics</h3>
+                        <p>Visualize your academic performance with detailed charts and progress tracking across all subjects.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="feature-title">Real-time Alerts</h3>
+                        <p>Get instant notifications when new grades are published or when there are updates to your academic record.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">Class Benchmarking</h3>
+                        <p>Compare your performance with class averages while maintaining complete anonymity of other students.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section End -->
 
-    </div>
+    <!-- Announcements Section Start -->
+    <section class="announcements-section">
+        <div class="container">
+            <h2 class="text-center section-title mb-12">Academic Announcements</h2>
+            <div class="announcement-slider">
+                <div class="relative" x-data="{
+                currentIndex: 0,
+                slides: [
+                    {
+                        image: '{{ asset('images/slides/slider1.gif') }}',
+                        title: 'Welcome on board',
+                        caption: 'Empowering education through efficient grade management.'
+                    },
+                    {
+                        image: '{{ asset('images/slides/slider2.gif') }}',
+                        title: 'Registration Deadline',
+                        caption: 'May 10, 2025'
+                    }
+                ],
+                next() {
+                    this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+                },
+                prev() {
+                    this.currentIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+                }
+            }" x-init="setInterval(() => next(), 5000)">
+                    <!-- Slides -->
+                    <template x-for="(slide, index) in slides" :key="index">
+                        <div class="slide" x-show="currentIndex === index" x-transition>
+                            <img :src="slide.image" :alt="slide.title">
+                            <div class="slide-info">
+                                <h3 x-text="slide.title"></h3>
+                                <p x-text="slide.caption"></p>
+                            </div>
+                        </div>
+                    </template>
 
+                    <!-- Navigation -->
+                    <button @click="prev()" class="slider-nav slider-prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button @click="next()" class="slider-nav slider-next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
 
-    <!-- ===== Page Wrapper End ===== -->
+                    <!-- Dots -->
+                    <div class="slider-dots">
+                        <template x-for="(slide, index) in slides" :key="index">
+                            <div @click="currentIndex = index" class="slider-dot" :class="{ 'active': currentIndex === index }"></div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Announcements Section End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-title">ENSAM GradeHouse</h5>
+                    <p>The official grade management platform for ENSAM Rabat students. Providing transparent access to academic results and performance analytics.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <div class="footer-links">
+                        <a href="{{url('sign-in')}}">Dashboard</a>
+                        <a href="{{url('sign-in')}}">Grades</a>
+                        <a href="{{url('sign-in')}}">Calendar</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Resources</h5>
+                    <div class="footer-links">
+                        <a href="#">FAQs</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Contact</h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> B.P. 6207 Avenue des Forces Armées Royales, Rabat 10100</p>
+                    <p><i class="fas fa-envelope me-2"></i> admin@ensam.um5.ac.ma</p>
+                    <p><i class="fas fa-phone me-2"></i>+212 5 37 56 40 62</p>
+                </div>
+            </div>
+            <div class="copyright text-center">
+                &copy; <span id="year"></span> ENSAM GradeHouse. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <!-- Footer End -->
 
     <!-- Toggler -->
     <div class="fixed z-50 hidden bottom-6 right-6 sm:block">
         <button
             class="inline-flex items-center justify-center text-white transition-colors rounded-full size-14 bg-brand-500 hover:bg-brand-600"
+            style="border-radius: calc(infinity * 1px);"
             @click.prevent="darkMode = !darkMode"
         >
             <svg
@@ -117,6 +601,30 @@
         </button>
     </div>
 
-<script defer src="{{ asset('bundle.js') }}"></script>
-</body>
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script defer src="{{ asset('bundle.js') }}"></script>
+
+    <script>
+        // Set current date and year
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Back to top button
+        window.addEventListener('scroll', function() {
+            var backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+    </script>
+</div>
 </html>
